@@ -1,0 +1,77 @@
+site_name: MsgFlow Documentation
+site_description: Documentation for the MsgFlow messaging library
+repo_url: https://github.com/yourusername/msgflow
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            show_if_no_docstring: true
+            heading_level: 3
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
+  - User Guide:
+    - Configuration: user-guide/configuration.md
+    - Examples: user-guide/examples.md
+    - Kafka Client: user-guide/kafka.md
+    - RabbitMQ Client: user-guide/rabbitmq.md
+    - Redis Client: user-guide/redis.md
+  - Advanced Topics:
+    - Consumer Groups: advanced/consumer-groups.md
+    - Error Handling: advanced/error-handling.md
+    - Performance: advanced/performance.md
+  - API Reference:
+    - Kafka API: api/kafka.md
+    - RabbitMQ API: api/rabbitmq.md
+    - Redis API: api/redis.md
+  - Development:
+    - Contributing: development/contributing.md
+    - Testing: development/testing.md

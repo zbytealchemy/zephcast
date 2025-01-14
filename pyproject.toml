@@ -1,0 +1,71 @@
+[tool.poetry]
+name = "msgflow"
+version = "0.1.0"
+description = "A messaging library supporting multiple backends"
+authors = ["Zbigniew Mastylo <z.mastylo@protonmail.com>"]
+readme = "README.md"
+packages = [{include = "msgflow", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiokafka = "^0.10.0"
+aio-pika = "^9.3.1"
+redis = {extras = ["hiredis"], version = "^5.0.1"}
+kafka-python = "^2.0.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+pytest-asyncio = "^0.23.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "W",   # pycodestyle warnings
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "RUF", # ruff-specific rules
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+]
+ignore = []
+
+[tool.ruff.isort]
+known-first-party = ["msgflow"]
+combine-as-imports = true
+force-single-line = false
+lines-between-types = 1
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+explicit_package_bases = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+mypy_path = "src"
