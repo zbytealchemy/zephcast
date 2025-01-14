@@ -78,14 +78,10 @@ class AsyncRedisClient(AsyncMessagingClient[str]):
                 await asyncio.sleep(0.1)
 
     async def close(self) -> None:
-        """Close the Redis connection."""
-        if self.redis_client is not None:
-            try:
-                await self.redis_client.aclose()
-            except Exception as e:
-                logger.error("Error closing Redis connection: %s", e)
-            finally:
-                self.redis_client = None
+        """Close the Redis client."""
+        if self.redis_client:
+            await self.redis_client.close()
+            self.redis_client = None
 
 
 # Register the client

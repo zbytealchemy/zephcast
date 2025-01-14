@@ -4,8 +4,9 @@ import asyncio
 import functools
 import logging
 
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Any, Callable, Optional, Sequence, Type, TypeVar, Union, cast
+from typing import Any, Optional, TypeVar, Union, cast
 
 T = TypeVar("T")
 F = TypeVar("F", bound=Callable[..., Any])
@@ -18,7 +19,7 @@ class RetryConfig:
     max_retries: int = 3
     retry_sleep: float = 1.0
     backoff_factor: float = 2.0
-    exceptions: Optional[Sequence[Type[Exception]]] = None
+    exceptions: Optional[Sequence[type[Exception]]] = None
     condition: Optional[Callable[[Any], bool]] = None
     on_retry: Optional[Callable[[int, Exception], None]] = None
 
@@ -29,6 +30,7 @@ async def _async_sleep(duration: float) -> None:
 
 def _sync_sleep(duration: float) -> None:
     import time
+
     time.sleep(duration)
 
 
@@ -51,10 +53,7 @@ def _handle_retry(retries: int, e: Exception, func_name: str, config: RetryConfi
 
 
 async def _retry_async(
-    func: Callable[..., Any],
-    args: tuple,
-    kwargs: dict,
-    config: RetryConfig
+    func: Callable[..., Any], args: tuple, kwargs: dict, config: RetryConfig
 ) -> Any:
     retries = 0
     sleep_time = config.retry_sleep

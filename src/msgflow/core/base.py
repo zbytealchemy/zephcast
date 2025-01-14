@@ -1,11 +1,10 @@
 """Base classes for messaging clients."""
 
 from abc import ABC, abstractmethod
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from typing import (
     Any,
     Generic,
-    Iterator,
     TypeVar,
 )
 

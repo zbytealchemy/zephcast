@@ -3,8 +3,6 @@
 import asyncio
 import logging
 
-from typing import List
-
 from msgflow.core.consumers import ConsumerConfig, batch_consumer, consumer
 from msgflow.core.retry import RetryConfig
 from msgflow.kafka.async_client import AsyncKafkaClient
@@ -48,7 +46,7 @@ batch_config = ConsumerConfig(
 
 
 @batch_consumer(config=batch_config)
-async def process_batch(messages: List[str]) -> None:
+async def process_batch(messages: list[str]) -> None:
     """Process a batch of messages with retry."""
     if any("error" in msg for msg in messages):
         raise TimeoutError("Failed to process batch")
@@ -86,7 +84,7 @@ async def main() -> None:
                 logger.error("Failed to process message after retries: %s", e)
 
         logger.info("Processing messages in batches...")
-        batch: List[str] = []
+        batch: list[str] = []
         async for message in client.receive():
             batch.append(message)
             if len(batch) >= batch_config.batch_size:

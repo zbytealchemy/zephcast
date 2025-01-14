@@ -2,26 +2,27 @@
 
 import asyncio
 
-from typing import List
-
 import pytest
 
 from msgflow.redis.async_client import AsyncRedisClient
+from msgflow.redis.sync_client import SyncRedisClient
 
-from .conftest import REDIS_URL, TEST_TIMEOUT
+from .conftest import REDIS_URL
 
 
 @pytest.mark.asyncio
-@pytest.mark.timeout(TEST_TIMEOUT)
-async def test_redis_async_send_receive(redis_async_client) -> None:
+@pytest.mark.timeout(30)
+async def test_redis_async_send_receive(redis_async_client: AsyncRedisClient) -> None:
+    """Test basic send and receive functionality."""
+
     test_messages = ["test1", "test2", "test3"]
-    received_messages: List[str] = []
+    received_messages: list[str] = []
 
     async for client in redis_async_client:
         for message in test_messages:
-            await client.send(message)
+            await client.send(message)  # type: ignore
 
-        async for message in client.receive():
+        async for message in client.receive():  # type: ignore
             received_messages.append(message)
             if len(received_messages) == len(test_messages):
                 break
@@ -30,10 +31,13 @@ async def test_redis_async_send_receive(redis_async_client) -> None:
         assert sorted(received_messages) == sorted(test_messages)
 
 
-@pytest.mark.timeout(TEST_TIMEOUT)
-def test_redis_sync_send_receive(redis_sync_client) -> None:
+@pytest.mark.timeout(30)
+def test_redis_sync_send_receive(
+    redis_sync_client: SyncRedisClient,
+) -> None:
+    """Test basic send and receive functionality."""
     test_messages = ["test1", "test2", "test3"]
-    received_messages: List[str] = []
+    received_messages: list[str] = []
 
     for message in test_messages:
         redis_sync_client.send(message)
@@ -48,12 +52,14 @@ def test_redis_sync_send_receive(redis_sync_client) -> None:
 
 
 @pytest.mark.asyncio
-@pytest.mark.timeout(TEST_TIMEOUT)
-async def test_redis_async_multiple_consumers(redis_stream) -> None:
+@pytest.mark.timeout(30)
+async def test_redis_async_multiple_consumers(redis_stream: str) -> None:
+    """Test multiple Redis consumers."""
+
     test_messages = ["test1", "test2", "test3"]
     consumer_count = 3
-    consumers: List[AsyncRedisClient] = []
-    received_messages: List[List[str]] = [[] for _ in range(consumer_count)]
+    consumers: list[AsyncRedisClient] = []
+    received_messages: list[list[str]] = [[] for _ in range(consumer_count)]
 
     producer = AsyncRedisClient(stream_name=redis_stream, redis_url=REDIS_URL)
     await producer.connect()
@@ -67,7 +73,7 @@ async def test_redis_async_multiple_consumers(redis_stream) -> None:
         for message in test_messages:
             await producer.send(message)
 
-        async def consume_messages(client: AsyncRedisClient, messages: List[str]) -> None:
+        async def consume_messages(client: AsyncRedisClient, messages: list[str]) -> None:
             async for message in client.receive():
                 messages.append(message)
                 if len(messages) >= len(test_messages):

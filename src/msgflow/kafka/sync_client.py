@@ -2,7 +2,8 @@
 
 import logging
 
-from typing import Any, Generic, Iterator, Optional, TypeVar
+from collections.abc import Iterator
+from typing import Any, Generic, Optional, TypeVar
 
 from kafka import KafkaConsumer, KafkaProducer
 from kafka.errors import KafkaError

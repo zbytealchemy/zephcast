@@ -1,6 +1,6 @@
 """Test helpers for msgflow."""
 
-from typing import List, Optional, TypeVar, Union
+from typing import Optional, TypeVar, Union
 
 from .mock_client import MockAsyncClient, MockSyncClient
 
@@ -11,8 +11,8 @@ def create_mock_client(
     stream_name: str,
     *,
     is_async: bool = True,
-    sent_messages: Optional[List[T]] = None,
-    received_messages: Optional[List[T]] = None,
+    sent_messages: Optional[list[T]] = None,
+    received_messages: Optional[list[T]] = None,
 ) -> Union[MockAsyncClient[T], MockSyncClient[T]]:
     """Create a mock client for testing.
 
@@ -39,8 +39,8 @@ def create_mock_client(
 
 
 def assert_messages_equal(
-    actual: List[T],
-    expected: List[T],
+    actual: list[T],
+    expected: list[T],
     *,
     msg: Optional[str] = None,
 ) -> None:

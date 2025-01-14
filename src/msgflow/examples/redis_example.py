@@ -42,10 +42,7 @@ async def main() -> None:
     producer = AsyncRedisClient(stream_name=stream_name, redis_url=redis_url)
     consumer = AsyncRedisClient(stream_name=stream_name, redis_url=redis_url)
 
-    await asyncio.gather(
-        produce_messages(producer),
-        consume_messages(consumer)
-    )
+    await asyncio.gather(produce_messages(producer), consume_messages(consumer))
 
     await producer.close()
     await consumer.close()

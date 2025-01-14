@@ -3,8 +3,6 @@
 import asyncio
 import uuid
 
-from typing import List
-
 import pytest
 
 from aio_pika.exceptions import AMQPConnectionError
@@ -22,7 +20,7 @@ class TestRabbitMQAsyncClient:
     async def test_async_send_receive(self, rabbitmq_queue: str) -> None:
         """Test basic send and receive functionality."""
         test_messages = ["test1", "test2", "test3"]
-        received_messages: List[str] = []
+        received_messages: list[str] = []
         routing_key = f"test-route-{uuid.uuid4()}"
         exchange_name = f"test-exchange-{uuid.uuid4()}"
 
@@ -57,8 +55,8 @@ class TestRabbitMQAsyncClient:
     async def test_consumer_groups(self, rabbitmq_queue: str) -> None:
         """Test consumer group functionality."""
         test_messages = ["test1", "test2", "test3", "test4"]
-        consumers: List[AsyncRabbitClient] = []
-        received_messages: List[List[str]] = [[], []]
+        consumers: list[AsyncRabbitClient] = []
+        received_messages: list[list[str]] = [[], []]
         routing_key = f"test-route-{uuid.uuid4()}"
         exchange_name = f"test-exchange-{uuid.uuid4()}"
 
@@ -93,7 +91,7 @@ class TestRabbitMQAsyncClient:
 
             await asyncio.sleep(1)
 
-            async def consume(consumer: AsyncRabbitClient, messages: List[str]) -> None:
+            async def consume(consumer: AsyncRabbitClient, messages: list[str]) -> None:
                 start_time = asyncio.get_event_loop().time()
                 timeout = 1.0
                 try:
@@ -102,7 +100,7 @@ class TestRabbitMQAsyncClient:
                             break
                         try:
 
-                            async def _consume():
+                            async def _consume() -> None:
                                 async for msg in consumer.receive():
                                     messages.append(msg)
                                     await asyncio.sleep(0)

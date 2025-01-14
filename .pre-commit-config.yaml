@@ -12,18 +12,16 @@ repos:
     -   id: mypy
         additional_dependencies: []
 
--   repo: https://github.com/rubik/radon
-    rev: v6.0.1
+-   repo: local
     hooks:
     -   id: radon
         name: radon - complexity check
-        entry: radon cc
-        args: [--min B]
-        language: python
+        entry: poetry run radon cc
+        args: [--min, B, src]
+        language: system
         types: [python]
+        pass_filenames: true
 
--   repo: local
-    hooks:
     -   id: pytest
         name: pytest
         entry: poetry run pytest

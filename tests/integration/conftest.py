@@ -4,7 +4,7 @@ import asyncio
 import os
 import uuid
 
-from typing import AsyncGenerator, Generator
+from collections.abc import AsyncGenerator, Generator
 
 import pytest
 
@@ -21,17 +21,22 @@ from msgflow.redis.sync_client import SyncRedisClient
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 RABBITMQ_URL = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-TEST_TIMEOUT = 30  # seconds
+TEST_TIMEOUT = 30
 
 
 @pytest.fixture(scope="session")
 def kafka_admin() -> Generator[KafkaAdminClient, None, None]:
     """Create a Kafka admin client for managing topics."""
-    admin = KafkaAdminClient(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
     try:
+        admin = KafkaAdminClient(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
         yield admin
+    except Exception as e:
+        pytest.skip(f"Kafka not available: {e}")
     finally:
-        admin.close()
+        try:
+            admin.close()
+        except Exception as e:
+            print(f"Warning: Failed to close Kafka admin client: {e}")
 
 
 @pytest.fixture
@@ -70,12 +75,12 @@ def rabbitmq_queue() -> Generator[str, None, None]:
 
 
 @pytest.fixture
-async def kafka_async_client(kafka_topic: str) -> AsyncKafkaClient:
+def kafka_async_client(kafka_topic: str) -> AsyncKafkaClient:
     """Create an async Kafka client for testing."""
     client = AsyncKafkaClient(
         stream_name=kafka_topic,
         bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        auto_offset_reset="earliest",  # Ensure we get all messages from the start
+        auto_offset_reset="earliest",
     )
     return client
 
@@ -83,7 +88,10 @@ async def kafka_async_client(kafka_topic: str) -> AsyncKafkaClient:
 @pytest.fixture
 def kafka_sync_client(kafka_topic: str) -> Generator[SyncKafkaClient, None, None]:
     """Create a sync Kafka client for testing."""
-    client = SyncKafkaClient(stream_name=kafka_topic, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
+    client: SyncKafkaClient = SyncKafkaClient(
+        stream_name=kafka_topic, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS
+    )
+
     try:
         client.connect()
         yield client
