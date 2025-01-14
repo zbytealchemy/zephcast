@@ -1,6 +1,7 @@
 """Synchronous Redis messaging client."""
 
-from typing import Any, Dict, Iterator, List, Optional, Tuple, cast
+from collections.abc import Iterator
+from typing import Any, Optional, cast
 
 import redis
 
@@ -45,7 +46,7 @@ class SyncRedisClient(SyncMessagingClient[str]):
         last_id = b"0"
         while True:
             entries = cast(
-                List[Tuple[bytes, List[Tuple[bytes, Dict[bytes, bytes]]]]],
+                list[tuple[bytes, list[tuple[bytes, dict[bytes, bytes]]]]],
                 self.redis_client.xread(
                     {self.stream_name: last_id},
                     count=1,

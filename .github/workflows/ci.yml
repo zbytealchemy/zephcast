@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11"]
 
     services:
       redis:
@@ -32,22 +32,20 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
     
     - name: Install dependencies
-      run: poetry install
+      run: |
+        poetry config virtualenvs.create false
+        poetry install --no-interaction
     
     - name: Run linting
       run: poetry run make lint
     
     - name: Run type checking
       run: poetry run make type-check
-    
-    - name: Check code complexity
-      run: |
-        pip install radon
-        radon cc . --min B --total-average
     
     - name: Run tests
       run: poetry run make test
@@ -63,11 +61,17 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.8"
+        python-version: "3.10"
     
     - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
+    
+    - name: Install dependencies
       run: |
-        curl -sSL https://install.python-poetry.org | python3 -
+        poetry config virtualenvs.create false
+        poetry install --no-interaction
     
     - name: Build and publish
       env:

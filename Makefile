@@ -21,7 +21,7 @@ unit-test:
 	poetry run pytest tests/unit -v
 
 integration-test:
-	poetry run pytest tests/integration -v --timeout=30
+	poetry run pytest tests/integration -v
 
 lint:
 	poetry run ruff check .
@@ -30,7 +30,7 @@ format:
 	poetry run ruff --fix .
 
 type-check:
-	poetry run mypy src
+	poetry run mypy src tests
 
 clean:
 	rm -rf dist

@@ -1,6 +1,6 @@
 """Tests for mock clients."""
 
-from typing import List, cast
+from typing import cast
 
 import pytest
 
@@ -72,7 +72,7 @@ async def test_async_client_receive() -> None:
         ),
     )
 
-    messages: List[str] = []
+    messages: list[str] = []
     async with client:
         async for message in await client.receive():
             messages.append(message)

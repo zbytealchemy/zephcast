@@ -3,8 +3,6 @@
 import asyncio
 import uuid
 
-from typing import List
-
 import pytest
 
 from aiokafka.errors import KafkaConnectionError
@@ -22,10 +20,11 @@ class TestKafkaAsyncClient:
     async def test_async_send_receive(
         self, kafka_async_client: AsyncKafkaClient, kafka_topic: str
     ) -> None:
+        """Test basic send and receive functionality."""
         test_messages = ["test1", "test2", "test3"]
-        received_messages: List[str] = []
+        received_messages: list[str] = []
 
-        client = await kafka_async_client
+        client = kafka_async_client
         await client.connect()
 
         try:
@@ -39,8 +38,13 @@ class TestKafkaAsyncClient:
 
             assert len(received_messages) == len(test_messages)
             assert all(msg in received_messages for msg in test_messages)
+        except Exception as e:
+            pytest.fail(f"Test failed: {e}")
         finally:
-            await client.close()
+            try:
+                await client.close()
+            except Exception as e:
+                pytest.fail(f"Failed to close client: {e}")
 
     @pytest.mark.asyncio
     @pytest.mark.timeout(TEST_TIMEOUT)
@@ -48,8 +52,8 @@ class TestKafkaAsyncClient:
         """Test consumer group functionality with just 2 consumers."""
         test_messages = ["test1", "test2", "test3", "test4"]
         group_id = f"test-group-{uuid.uuid4()}"
-        consumers: List[AsyncKafkaClient] = []
-        received_messages: List[List[str]] = [[], []]
+        consumers: list[AsyncKafkaClient] = []
+        received_messages: list[list[str]] = [[], []]
 
         producer = AsyncKafkaClient(
             stream_name=kafka_topic, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS
@@ -77,7 +81,7 @@ class TestKafkaAsyncClient:
 
             await asyncio.sleep(1)
 
-            async def consume(consumer: AsyncKafkaClient, messages: List[str]) -> None:
+            async def consume(consumer: AsyncKafkaClient, messages: list[str]) -> None:
                 start_time = asyncio.get_event_loop().time()
                 try:
                     while True:
@@ -85,7 +89,7 @@ class TestKafkaAsyncClient:
                             break
                         try:
 
-                            async def _consume():
+                            async def _consume() -> None:
                                 async for msg in consumer.receive():
                                     messages.append(msg)
                                     await asyncio.sleep(0)
@@ -127,6 +131,7 @@ class TestKafkaAsyncClient:
     @pytest.mark.asyncio
     @pytest.mark.timeout(5)
     async def test_error_handling(self, kafka_topic: str) -> None:
+        """Test error handling in the presence of invalid Kafka brokers."""
         client = AsyncKafkaClient(stream_name=kafka_topic, bootstrap_servers="invalid:9092")
 
         with pytest.raises(KafkaConnectionError):

@@ -1,6 +1,7 @@
 """Mock messaging clients for testing."""
 
-from typing import Any, AsyncGenerator, Generic, Iterator, List, Optional, TypeVar
+from collections.abc import AsyncGenerator, Iterator
+from typing import Any, Generic, Optional, TypeVar
 
 from msgflow.core.base import AsyncMessagingClient, SyncMessagingClient
 
@@ -15,8 +16,8 @@ class MockSyncClient(SyncMessagingClient[T], Generic[T]):
     def __init__(
         self,
         stream_name: str,
-        sent_messages: Optional[List[T]] = None,
-        received_messages: Optional[List[T]] = None,
+        sent_messages: Optional[list[T]] = None,
+        received_messages: Optional[list[T]] = None,
         **kwargs: Any,
     ) -> None:
         """Initialize mock client.
@@ -60,8 +61,8 @@ class MockAsyncClient(AsyncMessagingClient[T], Generic[T]):
     def __init__(
         self,
         stream_name: str,
-        sent_messages: Optional[List[T]] = None,
-        received_messages: Optional[List[T]] = None,
+        sent_messages: Optional[list[T]] = None,
+        received_messages: Optional[list[T]] = None,
         **kwargs: Any,
     ) -> None:
         """Initialize mock client.

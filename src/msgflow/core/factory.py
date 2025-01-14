@@ -1,11 +1,11 @@
 """Messaging client factory."""
 
-from typing import Any, Dict, Type, Union
+from typing import Any, Union
 
 from .base import AsyncMessagingClient, SyncMessagingClient
 
-ClientType = Union[Type[SyncMessagingClient], Type[AsyncMessagingClient]]
-_REGISTERED_CLIENTS: Dict[str, Dict[str, ClientType]] = {
+ClientType = Union[type[SyncMessagingClient], type[AsyncMessagingClient]]
+_REGISTERED_CLIENTS: dict[str, dict[str, ClientType]] = {
     "sync": {},
     "async": {},
 }

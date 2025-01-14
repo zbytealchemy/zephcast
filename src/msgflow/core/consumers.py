@@ -3,9 +3,10 @@ import functools
 import logging
 import time
 
+from collections.abc import Awaitable, Callable
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import dataclass
-from typing import Any, Awaitable, Callable, List, Optional, TypeVar, Union, cast
+from typing import Any, Optional, TypeVar, Union, cast
 
 from .retry import RetryConfig, retry
 
@@ -106,7 +107,7 @@ def consumer(
 def batch_consumer(
     config: Optional[ConsumerConfig] = None,
     **kwargs: Any,
-) -> Callable[[MessageHandler[List[T]]], MessageHandler[List[T]]]:
+) -> Callable[[MessageHandler[list[T]]], MessageHandler[list[T]]]:
     """
     Decorator for batch message consumers.
 
@@ -125,13 +126,13 @@ def batch_consumer(
             setattr(config, key, value)
 
     def decorator(
-        func: MessageHandler[List[T]],
-    ) -> MessageHandler[List[T]]:
+        func: MessageHandler[list[T]],
+    ) -> MessageHandler[list[T]]:
         if config.retry:
             func = retry(config=config.retry)(func)
 
         @functools.wraps(func)
-        async def async_wrapper(messages: List[T]) -> Any:
+        async def async_wrapper(messages: list[T]) -> Any:
             if len(messages) >= config.batch_size:
                 if asyncio.iscoroutinefunction(func):
                     return await func(messages)
@@ -143,7 +144,7 @@ def batch_consumer(
             return func(messages)
 
         @functools.wraps(func)
-        def sync_wrapper(messages: List[T]) -> Any:
+        def sync_wrapper(messages: list[T]) -> Any:
             if len(messages) >= config.batch_size:
                 return func(messages)
 
@@ -151,7 +152,7 @@ def batch_consumer(
             return func(messages)
 
         if asyncio.iscoroutinefunction(func):
-            return cast(MessageHandler[List[T]], async_wrapper)
-        return cast(MessageHandler[List[T]], sync_wrapper)
+            return cast(MessageHandler[list[T]], async_wrapper)
+        return cast(MessageHandler[list[T]], sync_wrapper)
 
     return decorator

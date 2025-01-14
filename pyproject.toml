@@ -7,15 +7,22 @@ readme = "README.md"
 packages = [{include = "msgflow", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"  
 aiokafka = "^0.10.0"
 aio-pika = "^9.3.1"
 redis = {extras = ["hiredis"], version = "^5.0.1"}
 kafka-python = "^2.0.2"
+types-redis = "^4.6.0.20241004"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.4"
 pytest-asyncio = "^0.23.3"
+pre-commit = "^4.0.1"
+ruff = "^0.1.8"
+mypy = "^1.7.0"
+radon = "^6.0.1"
+pytest-mypy-plugins = "^3.0.0"
+pytest-timeout = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -24,22 +31,25 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 asyncio_mode = "strict"
 testpaths = ["tests"]
+markers = [
+    "timeout: mark test to timeout after given seconds"
+]
 
 [tool.ruff]
 line-length = 100
-target-version = "py38"
+target-version = "py39"  
 select = [
-    "E",   # pycodestyle errors
-    "F",   # pyflakes
-    "I",   # isort
-    "N",   # pep8-naming
-    "W",   # pycodestyle warnings
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
-    "RUF", # ruff-specific rules
-    "TCH", # flake8-type-checking
-    "TID", # flake8-tidy-imports
+    "E",   
+    "F",   
+    "I",   
+    "N",   
+    "W",   
+    "B",   
+    "C4",  
+    "UP",  
+    "RUF", 
+    "TCH", 
+    "TID", 
 ]
 ignore = []
 
@@ -60,12 +70,18 @@ python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+disallow_incomplete_defs = true
 check_untyped_defs = true
-ignore_missing_imports = true
-explicit_package_bases = true
 no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
+ignore_missing_imports = true
+explicit_package_bases = true
+plugins = []
 mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = "redis.*"
+ignore_missing_imports = true

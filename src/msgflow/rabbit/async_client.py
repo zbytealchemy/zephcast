@@ -2,7 +2,8 @@
 
 import logging
 
-from typing import Any, AsyncGenerator, Optional
+from collections.abc import AsyncGenerator
+from typing import Any, Optional
 
 import aio_pika
 

@@ -2,7 +2,8 @@
 
 import logging
 
-from typing import Any, AsyncGenerator, Optional, cast
+from collections.abc import AsyncGenerator
+from typing import Any, Optional, cast
 
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 
