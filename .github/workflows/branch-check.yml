@@ -1,0 +1,31 @@
+name: Branch Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check commit count
+        run: |
+          COMMIT_COUNT=$(git rev-list --count origin/${{ github.base_ref }}..${{ github.event.pull_request.head.sha }})
+          if [ "$COMMIT_COUNT" -gt 2 ]; then
+            echo "Error: Pull request has more than 2 commits. Please rebase and squash commits."
+            exit 1
+          fi
+
+      - name: Check if branch is rebased
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          MERGE_BASE=$(git merge-base origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }})
+          HEAD_BASE=$(git rev-parse origin/${{ github.base_ref }})
+          if [ "$MERGE_BASE" != "$HEAD_BASE" ]; then
+            echo "Error: Branch is not rebased on latest ${{ github.base_ref }}. Please rebase your branch."
+            exit 1
+          fi
