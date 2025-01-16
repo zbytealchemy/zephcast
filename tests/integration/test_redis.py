@@ -4,8 +4,8 @@ import asyncio
 
 import pytest
 
-from msgflow.redis.async_client import AsyncRedisClient
-from msgflow.redis.sync_client import SyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.sync_client import SyncRedisClient
 
 from .conftest import REDIS_URL
 

@@ -5,8 +5,8 @@ from typing import Any, Optional, cast
 
 import redis
 
-from msgflow.core.base import SyncMessagingClient
-from msgflow.core.factory import register_client
+from zephyrflow.core.base import SyncMessagingClient
+from zephyrflow.core.factory import register_client
 
 
 class SyncRedisClient(SyncMessagingClient[str]):

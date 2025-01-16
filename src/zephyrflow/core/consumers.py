@@ -20,20 +20,26 @@ ExecutorType = Union[ThreadPoolExecutor, ProcessPoolExecutor]
 
 @dataclass
 class ConsumerConfig:
-    """Configuration for consumer decorator."""
+    """Configuration for consumer decorator.
 
-    # Retry configuration
+    Args:
+        retry: Retry configuration
+        executor_type: Executor type ("thread" or "process")
+        num_workers: Number of workers
+        batch_size: Batch size
+        batch_timeout: Batch timeout in seconds
+        auto_ack: Auto ack messages
+        dead_letter_queue: Dead letter queue name
+    """
+
     retry: Optional[RetryConfig] = None
 
-    # Scaling configuration
     executor_type: Optional[str] = None  # "thread" or "process"
     num_workers: int = 1
 
-    # Batch processing
     batch_size: int = 1
     batch_timeout: float = 1.0
 
-    # Message handling
     auto_ack: bool = True
     dead_letter_queue: Optional[str] = None
 
@@ -69,6 +75,7 @@ def consumer(
     def decorator(
         func: MessageHandler[T],
     ) -> MessageHandler[T]:
+        """Decorate the message handler."""
         if config.retry:
             func = retry(config=config.retry)(func)
 

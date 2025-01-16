@@ -3,7 +3,7 @@
 import asyncio
 import logging
 
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

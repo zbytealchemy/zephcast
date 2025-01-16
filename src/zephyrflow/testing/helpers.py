@@ -1,4 +1,4 @@
-"""Test helpers for msgflow."""
+"""Test helpers for zephyrflow."""
 
 from typing import Optional, TypeVar, Union
 

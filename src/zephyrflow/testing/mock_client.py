@@ -3,7 +3,7 @@
 from collections.abc import AsyncGenerator, Iterator
 from typing import Any, Generic, Optional, TypeVar
 
-from msgflow.core.base import AsyncMessagingClient, SyncMessagingClient
+from zephyrflow.core.base import AsyncMessagingClient, SyncMessagingClient
 
 T = TypeVar("T")
 
