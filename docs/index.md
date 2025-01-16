@@ -1,6 +1,6 @@
-# Welcome to MsgFlow
+# Welcome to ZephyrFlow
 
-MsgFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
+ZephyrFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
 
 ## Key Features
 
@@ -23,7 +23,7 @@ MsgFlow is a powerful and flexible messaging library that provides a unified int
 ## Quick Example
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     # Create a client
@@ -49,24 +49,24 @@ async def kafka_example():
 
 ## Getting Started
 
-Check out our [Quick Start Guide](getting-started/quickstart.md) to begin using MsgFlow in your project.
+Check out our [Quick Start Guide](getting-started/quickstart.md) to begin using ZephyrFlow in your project.
 
-## Why MsgFlow?
+## Why ZephyrFlow?
 
 ### Unified Interface
-MsgFlow provides a consistent interface across different message brokers, making it easy to switch between them or use multiple brokers in the same application.
+ZephyrFlow provides a consistent interface across different message brokers, making it easy to switch between them or use multiple brokers in the same application.
 
 ### Type Safety
-Built with type hints from the ground up, MsgFlow helps catch errors early and provides excellent IDE support.
+Built with type hints from the ground up, ZephyrFlow helps catch errors early and provides excellent IDE support.
 
 ### Async First
-Designed for modern async/await Python, MsgFlow makes it easy to build high-performance messaging applications.
+Designed for modern async/await Python, ZephyrFlow makes it easy to build high-performance messaging applications.
 
 ### Production Ready
-Thoroughly tested and used in production, MsgFlow includes robust error handling and recovery mechanisms.
+Thoroughly tested and used in production, ZephyrFlow includes robust error handling and recovery mechanisms.
 
 ## Support
 
-- [GitHub Issues](https://github.com/yourusername/msgflow/issues)
-- [Documentation](https://yourusername.github.io/msgflow)
+- [GitHub Issues](https://github.com/zbytealchemy/zephyrflow/issues)
+- [Documentation](https://zbytealchemy.github.io/zephyrflow)
 - [Contributing Guide](development/contributing.md)

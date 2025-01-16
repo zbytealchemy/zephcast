@@ -1,6 +1,6 @@
-# MsgFlow
+# ZephyrFlow
 
-MsgFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
+ZephyrFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
 
 ## Features
 
@@ -27,17 +27,17 @@ MsgFlow is a powerful and flexible messaging library that provides a unified int
 
 ```bash
 # Install with poetry (recommended)
-poetry add msgflow
+poetry add zephyrflow
 
 # Install with pip
-pip install msgflow
+pip install zephyrflow
 ```
 
 ## Quick Start
 
 ### Async Iterator Pattern
 
-All async clients in MsgFlow implement the async iterator pattern, allowing you to use them in async for loops:
+All async clients in ZephyrFlow implement the async iterator pattern, allowing you to use them in async for loops:
 
 ```python
 async with client:  # Automatically connects and closes
@@ -48,7 +48,7 @@ async with client:  # Automatically connects and closes
 ### Kafka Example
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     # Create a client
@@ -70,7 +70,7 @@ async def kafka_example():
 ### RabbitMQ Example
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
     # Create a client
@@ -98,7 +98,7 @@ async def rabbitmq_example():
 ### Redis Example
 
 ```python
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 async def redis_example():
     # Create a client
@@ -215,8 +215,8 @@ finally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/msgflow.git
-cd msgflow
+git clone https://github.com/zbytealchemy/zephyrflow.git
+cd zephyrflow
 
 # Install dependencies
 poetry install
@@ -240,6 +240,8 @@ poetry run pytest tests/integration
 ```
 
 ## Contributing
+
+We use rebase workflow for pull requests and allow no more then 2 commits per PR.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)

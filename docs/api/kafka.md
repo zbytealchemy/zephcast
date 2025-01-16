@@ -9,7 +9,7 @@ The Kafka client provides a high-level interface for working with Apache Kafka.
 The main client class for interacting with Kafka.
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 client = AsyncKafkaClient(
     stream_name="my-topic",
@@ -39,7 +39,7 @@ client = AsyncKafkaClient(
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     client = AsyncKafkaClient(

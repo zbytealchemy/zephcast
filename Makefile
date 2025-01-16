@@ -12,8 +12,14 @@ help:
 	@echo "make docs        - Build documentation"
 	@echo "make docs-serve  - Serve documentation locally"
 
-install:
+lock:
+	poetry lock
+
+install: lock
 	poetry install
+
+install-dev: lock
+	poetry install --with dev
 
 test: unit-test integration-test
 

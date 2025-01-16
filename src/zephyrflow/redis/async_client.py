@@ -80,7 +80,7 @@ class AsyncRedisClient(AsyncMessagingClient[str]):
     async def close(self) -> None:
         """Close the Redis client."""
         if self.redis_client:
-            await self.redis_client.close()
+            await self.redis_client.aclose()  # type: ignore
             self.redis_client = None
 
 

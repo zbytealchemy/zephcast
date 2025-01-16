@@ -1,6 +1,6 @@
 # RabbitMQ Client Guide
 
-The RabbitMQ client in MsgFlow provides a high-level interface for working with RabbitMQ, supporting various messaging patterns.
+The RabbitMQ client in ZephyrFlow provides a high-level interface for working with RabbitMQ, supporting various messaging patterns.
 
 ## Features
 
@@ -15,7 +15,7 @@ The RabbitMQ client in MsgFlow provides a high-level interface for working with 
 ## Basic Usage
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
     client = AsyncRabbitClient(
@@ -104,7 +104,7 @@ client = AsyncRabbitClient(
 ## Publisher Confirms
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def publisher_confirms_example():
     client = AsyncRabbitClient(
@@ -128,7 +128,7 @@ async def publisher_confirms_example():
 ## Consumer Acknowledgments
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def consumer_acks_example():
     client = AsyncRabbitClient(
