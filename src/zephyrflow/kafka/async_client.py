@@ -7,7 +7,7 @@ from typing import Any, Optional, cast
 
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 
-from msgflow.core.base import AsyncMessagingClient
+from zephyrflow.core.base import AsyncMessagingClient
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ class AsyncKafkaClient(AsyncMessagingClient[str]):
         """
         super().__init__(stream_name=stream_name)
         self.bootstrap_servers = bootstrap_servers
-        self.group_id = group_id or f"msgflow-async-{stream_name}"
+        self.group_id = group_id or f"zephyrflow-async-{stream_name}"
         self.auto_offset_reset = auto_offset_reset
         self.enable_auto_commit = enable_auto_commit
         self.producer: Optional[AIOKafkaProducer] = None

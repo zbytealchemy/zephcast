@@ -16,6 +16,17 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RetryConfig:
+    """Configuration for retry decorator.
+
+    Args:
+        max_retries: Maximum number of retries
+        retry_sleep: Initial sleep time between retries
+        backoff_factor: Multiplier for sleep time after each retry
+        exceptions: Exceptions to retry
+        condition: Condition to check before retrying
+        on_retry: Callback on each retry
+    """
+
     max_retries: int = 3
     retry_sleep: float = 1.0
     backoff_factor: float = 2.0
@@ -25,22 +36,38 @@ class RetryConfig:
 
 
 async def _async_sleep(duration: float) -> None:
+    """Async sleep."""
     await asyncio.sleep(duration)
 
 
 def _sync_sleep(duration: float) -> None:
+    """Sync sleep."""
     import time
 
     time.sleep(duration)
 
 
 def _should_retry(e: Exception, config: RetryConfig) -> bool:
+    """Check if the exception should be retried.
+
+    Args:
+        e: Exception
+        config: RetryConfig
+    """
     if not config.exceptions:
         return True
     return isinstance(e, tuple(config.exceptions))
 
 
 def _handle_retry(retries: int, e: Exception, func_name: str, config: RetryConfig) -> None:
+    """Handle retry logic.
+
+    Args:
+        retries: Number of retries
+        e: Exception
+        func_name: Name of the function being retried
+        config: RetryConfig
+    """
     if config.on_retry:
         config.on_retry(retries, e)
     logger.warning(
@@ -55,6 +82,14 @@ def _handle_retry(retries: int, e: Exception, func_name: str, config: RetryConfi
 async def _retry_async(
     func: Callable[..., Any], args: tuple, kwargs: dict, config: RetryConfig
 ) -> Any:
+    """Async retry loop.
+
+    Args:
+        func: Function to retry
+        args: Arguments to pass to the function
+        kwargs: Keyword arguments to pass to the function
+        config: RetryConfig
+    """
     retries = 0
     sleep_time = config.retry_sleep
 
@@ -76,6 +111,14 @@ async def _retry_async(
 
 
 def _retry_sync(func: Callable[..., Any], args: tuple, kwargs: dict, config: RetryConfig) -> Any:
+    """Sync retry loop.
+
+    Args:
+        func: Function to retry
+        args: Arguments to pass to the function
+        kwargs: Keyword arguments to pass to the function
+        config: RetryConfig
+    """
     retries = 0
     sleep_time = config.retry_sleep
 
@@ -97,6 +140,12 @@ def _retry_sync(func: Callable[..., Any], args: tuple, kwargs: dict, config: Ret
 
 
 def retry(config: RetryConfig) -> Callable[[F], F]:
+    """Retry decorator for sync and async functions.
+
+    Args:
+        config: RetryConfig
+    """
+
     def decorator(func: F) -> F:
         @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -110,6 +159,12 @@ def retry(config: RetryConfig) -> Callable[[F], F]:
 
 
 def with_retry(func: Optional[F] = None, *, config: RetryConfig) -> Union[F, Callable[[F], F]]:
+    """Retry decorator for sync and async functions.
+
+    Args:
+        func: Function to retry
+        config: RetryConfig
+    """
     if func is None:
         return lambda f: retry(config=config)(f)
     return retry(config=config)(func)

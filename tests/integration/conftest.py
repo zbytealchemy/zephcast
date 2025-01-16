@@ -12,11 +12,11 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import KafkaError, TopicAlreadyExistsError
 
-from msgflow.kafka.async_client import AsyncKafkaClient
-from msgflow.kafka.sync_client import SyncKafkaClient
-from msgflow.rabbit.async_client import AsyncRabbitClient
-from msgflow.redis.async_client import AsyncRedisClient
-from msgflow.redis.sync_client import SyncRedisClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.sync_client import SyncKafkaClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.sync_client import SyncRedisClient
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 RABBITMQ_URL = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/")

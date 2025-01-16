@@ -1,1 +1,1 @@
-"""Integration tests package for msgflow."""
+"""Integration tests package for zephyrflow."""

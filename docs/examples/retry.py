@@ -1,11 +1,11 @@
-"""Example of using retry with MsgFlow consumers."""
+"""Example of using retry with ZephyrFlow consumers."""
 
 import asyncio
 import logging
 
-from msgflow.core.consumers import ConsumerConfig, batch_consumer, consumer
-from msgflow.core.retry import RetryConfig
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.core.consumers import ConsumerConfig, batch_consumer, consumer
+from zephyrflow.core.retry import RetryConfig
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
