@@ -5,7 +5,7 @@ import logging
 
 from contextlib import suppress
 
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit import AsyncRabbitClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

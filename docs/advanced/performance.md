@@ -1,13 +1,13 @@
 # Performance Optimization
 
-This guide covers performance optimization techniques for MsgFlow applications.
+This guide covers performance optimization techniques for ZephyrFlow applications.
 
 ## Batch Processing
 
 ### Kafka Batch Publishing
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def batch_publish():
     client = AsyncKafkaClient(
@@ -31,7 +31,7 @@ async def batch_publish():
 ### RabbitMQ Batch Publishing
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def batch_publish():
     client = AsyncRabbitClient(
@@ -56,7 +56,7 @@ async def batch_publish():
 ### Redis Connection Pool
 
 ```python
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
@@ -69,7 +69,7 @@ client = AsyncRedisClient(
 ### RabbitMQ Channel Pool
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 client = AsyncRabbitClient(
     stream_name="my-routing-key",
@@ -84,7 +84,7 @@ client = AsyncRabbitClient(
 ### Kafka Compression
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 client = AsyncKafkaClient(
     stream_name="my-topic",
@@ -98,7 +98,7 @@ client = AsyncKafkaClient(
 
 ```python
 import zlib
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def compress_and_send():
     client = AsyncRabbitClient(
@@ -126,7 +126,7 @@ async def compress_and_send():
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def parallel_processing():
     client = AsyncKafkaClient(
@@ -163,7 +163,7 @@ async def parallel_processing():
 ### Prefetch Settings
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 client = AsyncRabbitClient(
     stream_name="my-routing-key",
@@ -178,7 +178,7 @@ client = AsyncRabbitClient(
 ### Message Size Limits
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 client = AsyncKafkaClient(
     stream_name="my-topic",
@@ -191,7 +191,7 @@ client = AsyncKafkaClient(
 ### Stream Trimming (Redis)
 
 ```python
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
@@ -207,7 +207,7 @@ client = AsyncRedisClient(
 
 ```python
 import time
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def monitor_performance():
     client = AsyncKafkaClient(

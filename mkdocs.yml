@@ -1,6 +1,6 @@
-site_name: MsgFlow Documentation
-site_description: Documentation for the MsgFlow messaging library
-repo_url: https://github.com/yourusername/msgflow
+site_name: ZephyrFlow Documentation
+site_description: Documentation for the ZephyrFlow messaging library
+repo_url: https://github.com/zbytealchemy/zephyrflow
 
 theme:
   name: material

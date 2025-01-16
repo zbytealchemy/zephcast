@@ -1,10 +1,10 @@
 # Quick Start Guide
 
-This guide will help you get started with MsgFlow by walking through basic examples for each supported message broker.
+This guide will help you get started with ZephyrFlow by walking through basic examples for each supported message broker.
 
 ## Basic Concepts
 
-MsgFlow provides a unified interface for working with different message brokers. The main concepts are:
+ZephyrFlow provides a unified interface for working with different message brokers. The main concepts are:
 
 - **Client**: A connection to a message broker
 - **Stream**: A named channel for sending/receiving messages
@@ -13,7 +13,7 @@ MsgFlow provides a unified interface for working with different message brokers.
 
 ## Async Iterator Pattern
 
-All async clients in MsgFlow implement the async iterator pattern, which provides a clean and Pythonic way to work with message streams:
+All async clients in ZephyrFlow implement the async iterator pattern, which provides a clean and Pythonic way to work with message streams:
 
 ```python
 # Using async context manager for automatic connection management
@@ -38,7 +38,7 @@ finally:
 
 ## Kafka Example
 
-Here's a complete example of using MsgFlow with Kafka:
+Here's a complete example of using ZephyrFlow with Kafka:
 
 ```python
 import asyncio
@@ -70,7 +70,7 @@ asyncio.run(kafka_example())
 
 ## RabbitMQ Example
 
-Here's how to use MsgFlow with RabbitMQ:
+Here's how to use ZephyrFlow with RabbitMQ:
 
 ```python
 import asyncio
@@ -103,7 +103,7 @@ asyncio.run(rabbitmq_example())
 
 ## Redis Example
 
-Here's how to use MsgFlow with Redis Streams:
+Here's how to use ZephyrFlow with Redis Streams:
 
 ```python
 import asyncio

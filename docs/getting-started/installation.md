@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Before installing MsgFlow, ensure you have:
+Before installing ZephyrFlow, ensure you have:
 
 - Python 3.10 or higher
 - pip or poetry for package management
@@ -12,40 +12,40 @@ Before installing MsgFlow, ensure you have:
 
 ### Using Poetry (Recommended)
 
-Poetry is the recommended way to install MsgFlow as it provides better dependency management:
+Poetry is the recommended way to install ZephyrFlow as it provides better dependency management:
 
 ```bash
 # Install poetry if you haven't already
 curl -sSL https://install.python-poetry.org | python3 -
 
-# Install MsgFlow
-poetry add msgflow
+# Install ZephyrFlow
+poetry add zephyrflow
 ```
 
 ### Using pip
 
-You can also install MsgFlow using pip:
+You can also install ZephyrFlow using pip:
 
 ```bash
-pip install msgflow
+pip install zephyrflow
 ```
 
 ## Installing Optional Dependencies
 
-MsgFlow supports different message brokers. You can install only the dependencies you need:
+ZephyrFlow supports different message brokers. You can install only the dependencies you need:
 
 ```bash
 # For Kafka support
-poetry add msgflow[kafka]
+poetry add zephyrflow[kafka]
 
 # For RabbitMQ support
-poetry add msgflow[rabbitmq]
+poetry add zephyrflow[rabbitmq]
 
 # For Redis support
-poetry add msgflow[redis]
+poetry add zephyrflow[redis]
 
 # For all message brokers
-poetry add msgflow[all]
+poetry add zephyrflow[all]
 ```
 
 ## Setting Up Message Brokers
@@ -97,8 +97,8 @@ For production, you'll want to use managed services or proper cluster setups:
 You can verify your installation by running:
 
 ```python
-import msgflow
-print(msgflow.__version__)
+import zephyrflow
+print(zephyrflow.__version__)
 ```
 
 Or by running the test suite:
