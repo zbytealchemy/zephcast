@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING, Any, Optional
 
 import pika
 
-from src.core.base import SyncMessagingClient
-from src.core.factory import register_client
+from zephyrflow.core.base import SyncMessagingClient
+from zephyrflow.core.factory import register_client
 
 if TYPE_CHECKING:
     from pika.adapters.blocking_connection import BlockingChannel, BlockingConnection

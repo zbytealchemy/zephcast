@@ -9,7 +9,7 @@ The Redis client provides a high-level interface for working with Redis Streams.
 The main client class for interacting with Redis Streams.
 
 ```python
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
@@ -41,7 +41,7 @@ client = AsyncRedisClient(
 
 ```python
 import asyncio
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 async def redis_example():
     client = AsyncRedisClient(

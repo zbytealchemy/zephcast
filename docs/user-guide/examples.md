@@ -1,6 +1,6 @@
 # Examples
 
-This page provides practical examples of using MsgFlow in different scenarios.
+This page provides practical examples of using ZephyrFlow in different scenarios.
 
 ## Basic Usage
 
@@ -8,7 +8,7 @@ This page provides practical examples of using MsgFlow in different scenarios.
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def basic_example():
     # Create a client
@@ -41,7 +41,7 @@ asyncio.run(basic_example())
 
 ```python
 import asyncio
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephyrflow.rabbit.async_client import AsyncRabbitClient
 
 async def fan_out_example():
     # Create a producer
@@ -94,7 +94,7 @@ asyncio.run(fan_out_example())
 
 ```python
 import asyncio
-from msgflow.redis.async_client import AsyncRedisClient
+from zephyrflow.redis.async_client import AsyncRedisClient
 
 async def pub_sub_example():
     # Create publisher and subscribers
@@ -144,7 +144,7 @@ asyncio.run(pub_sub_example())
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def retry_example():
     client = AsyncKafkaClient(
@@ -178,7 +178,7 @@ asyncio.run(retry_example())
 ```python
 import asyncio
 import json
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephyrflow.kafka.async_client import AsyncKafkaClient
 
 async def transform_example():
     # Create source and destination clients
