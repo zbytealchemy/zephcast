@@ -6,8 +6,7 @@ import threading
 
 from queue import Queue
 
-from zephyrflow.redis.async_client import AsyncRedisClient
-from zephyrflow.redis.sync_client import SyncRedisClient
+from zephyrflow.redis import AsyncRedisClient, SyncRedisClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
