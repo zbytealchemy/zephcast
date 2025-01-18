@@ -1,10 +1,10 @@
 # Configuration Guide
 
-MsgFlow provides flexible configuration options for each message broker. This guide covers all available configuration options and best practices.
+ZephCast provides flexible configuration options for each message broker. This guide covers all available configuration options and best practices.
 
 ## Environment Variables
 
-MsgFlow supports configuration through environment variables:
+ZephCast supports configuration through environment variables:
 
 ```bash
 # Kafka Configuration
