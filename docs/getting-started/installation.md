@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Before installing ZephyrFlow, ensure you have:
+Before installing ZephCast, ensure you have:
 
 - Python 3.10 or higher
 - pip or poetry for package management
@@ -12,40 +12,40 @@ Before installing ZephyrFlow, ensure you have:
 
 ### Using Poetry (Recommended)
 
-Poetry is the recommended way to install ZephyrFlow as it provides better dependency management:
+Poetry is the recommended way to install ZephCast as it provides better dependency management:
 
 ```bash
 # Install poetry if you haven't already
 curl -sSL https://install.python-poetry.org | python3 -
 
-# Install ZephyrFlow
-poetry add zephyrflow
+# Install ZephCast
+poetry add zephcast
 ```
 
 ### Using pip
 
-You can also install ZephyrFlow using pip:
+You can also install ZephCast using pip:
 
 ```bash
-pip install zephyrflow
+pip install zephcast
 ```
 
 ## Installing Optional Dependencies
 
-ZephyrFlow supports different message brokers. You can install only the dependencies you need:
+ZephCast supports different message brokers. You can install only the dependencies you need:
 
 ```bash
 # For Kafka support
-poetry add zephyrflow[kafka]
+poetry add zephcast[kafka]
 
 # For RabbitMQ support
-poetry add zephyrflow[rabbitmq]
+poetry add zephcast[rabbitmq]
 
 # For Redis support
-poetry add zephyrflow[redis]
+poetry add zephcast[redis]
 
 # For all message brokers
-poetry add zephyrflow[all]
+poetry add zephcast[all]
 ```
 
 ## Setting Up Message Brokers
@@ -97,8 +97,8 @@ For production, you'll want to use managed services or proper cluster setups:
 You can verify your installation by running:
 
 ```python
-import zephyrflow
-print(zephyrflow.__version__)
+import zephcast
+print(zephcast.__version__)
 ```
 
 Or by running the test suite:

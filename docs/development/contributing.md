@@ -6,8 +6,8 @@ Thank you for your interest in contributing to MsgFlow! This guide will help you
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/msgflow.git
-cd msgflow
+git clone https://github.com/yourusername/zephcast.git
+cd zephcast
 ```
 
 2. Install development dependencies:
@@ -103,9 +103,9 @@ poetry run mkdocs serve
 ## Project Structure
 
 ```
-msgflow/
+zephcast/
 ├── src/
-│   └── msgflow/
+│   └── zephcast/
 │       ├── kafka/
 │       ├── rabbit/
 │       └── redis/

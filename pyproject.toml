@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "zephyrflow"
-version = "0.2.0"
+name = "zephcast"
+version = "0.1.0"
 description = "A messaging library supporting multiple backends"
 authors = ["Zbigniew Mastylo <z.mastylo@protonmail.com>"]
 readme = "README.md"
-packages = [{include = "zephyrflow", from = "src"}]
+packages = [{include = "zephcast", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"  
@@ -59,7 +59,7 @@ select = [
 ignore = []
 
 [tool.ruff.isort]
-known-first-party = ["zephyrflow"]
+known-first-party = ["zephcast"]
 combine-as-imports = true
 force-single-line = false
 lines-between-types = 1

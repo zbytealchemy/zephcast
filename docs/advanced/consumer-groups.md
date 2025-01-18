@@ -4,7 +4,7 @@ Consumer groups allow multiple consumers to work together to process messages fr
 
 ## Overview
 
-Consumer groups are supported by all three message brokers in ZephyrFlow:
+Consumer groups are supported by all three message brokers in ZephCast:
 
 - Kafka: Native consumer groups
 - RabbitMQ: Competing consumers pattern
@@ -14,7 +14,7 @@ Consumer groups are supported by all three message brokers in ZephyrFlow:
 
 ```python
 import asyncio
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_consumer_group():
     # Create multiple consumers in the same group
@@ -50,7 +50,7 @@ async def kafka_consumer_group():
 
 ```python
 import asyncio
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_competing_consumers():
     # Create multiple consumers sharing the same queue
@@ -87,7 +87,7 @@ async def rabbitmq_competing_consumers():
 
 ```python
 import asyncio
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_consumer_group():
     # Create multiple consumers in the same group

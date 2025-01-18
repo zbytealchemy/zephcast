@@ -1,13 +1,13 @@
 # Error Handling
 
-Proper error handling is crucial for building reliable messaging applications. This guide covers error handling strategies for ZephyrFlow.
+Proper error handling is crucial for building reliable messaging applications. This guide covers error handling strategies for ZephCast.
 
 ## Common Error Types
 
 ### Connection Errors
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 from kafka.errors import KafkaConnectionError
 
 async def handle_connection_error():
@@ -28,7 +28,7 @@ async def handle_connection_error():
 ### Message Publishing Errors
 
 ```python
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 from aio_pika.exceptions import MessageError
 
 async def handle_publish_error():
@@ -52,7 +52,7 @@ async def handle_publish_error():
 ### Consumer Errors
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 from redis.exceptions import RedisError
 
 async def handle_consumer_error():
@@ -85,7 +85,7 @@ async def handle_consumer_error():
 
 ```python
 import asyncio
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def exponential_backoff(func, max_retries=3, base_delay=1):
     for attempt in range(max_retries):
@@ -119,7 +119,7 @@ async def publish_with_retry():
 
 ```python
 import time
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 class CircuitBreaker:
     def __init__(self, failure_threshold=3, reset_timeout=60):
@@ -172,7 +172,7 @@ async def publish_with_circuit_breaker():
 ### RabbitMQ Dead Letter Exchange
 
 ```python
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def setup_dead_letter():
     # Main queue client

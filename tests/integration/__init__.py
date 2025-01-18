@@ -1,1 +1,1 @@
-"""Integration tests package for zephyrflow."""
+"""Integration tests package for zephcast."""
