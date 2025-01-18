@@ -6,8 +6,8 @@ from typing import Any, Optional
 
 import redis.asyncio as redis
 
-from zephyrflow.core.base import AsyncMessagingClient
-from zephyrflow.core.factory import register_client
+from zephcast.core.base import AsyncMessagingClient
+from zephcast.core.factory import register_client
 
 logger = logging.getLogger(__name__)
 

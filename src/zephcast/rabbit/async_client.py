@@ -10,8 +10,8 @@ import aio_pika
 from aio_pika.abc import AbstractChannel, AbstractConnection, AbstractQueue
 from aio_pika.pool import Pool
 
-from zephyrflow.core.base import AsyncMessagingClient
-from zephyrflow.core.factory import register_client
+from zephcast.core.base import AsyncMessagingClient
+from zephcast.core.factory import register_client
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
-# Welcome to ZephyrFlow
+# Welcome to ZephCast
 
-ZephyrFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
+ZephCast is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
 
 ## Key Features
 
@@ -23,7 +23,7 @@ ZephyrFlow is a powerful and flexible messaging library that provides a unified 
 ## Quick Example
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     # Create a client
@@ -49,24 +49,24 @@ async def kafka_example():
 
 ## Getting Started
 
-Check out our [Quick Start Guide](getting-started/quickstart.md) to begin using ZephyrFlow in your project.
+Check out our [Quick Start Guide](getting-started/quickstart.md) to begin using ZephCast in your project.
 
-## Why ZephyrFlow?
+## Why ZephCast?
 
 ### Unified Interface
-ZephyrFlow provides a consistent interface across different message brokers, making it easy to switch between them or use multiple brokers in the same application.
+ZephCast provides a consistent interface across different message brokers, making it easy to switch between them or use multiple brokers in the same application.
 
 ### Type Safety
-Built with type hints from the ground up, ZephyrFlow helps catch errors early and provides excellent IDE support.
+Built with type hints from the ground up, ZephCast helps catch errors early and provides excellent IDE support.
 
 ### Async First
-Designed for modern async/await Python, ZephyrFlow makes it easy to build high-performance messaging applications.
+Designed for modern async/await Python, ZephCast makes it easy to build high-performance messaging applications.
 
 ### Production Ready
-Thoroughly tested and used in production, ZephyrFlow includes robust error handling and recovery mechanisms.
+Thoroughly tested and used in production, ZephCast includes robust error handling and recovery mechanisms.
 
 ## Support
 
-- [GitHub Issues](https://github.com/zbytealchemy/zephyrflow/issues)
-- [Documentation](https://zbytealchemy.github.io/zephyrflow)
+- [GitHub Issues](https://github.com/zbytealchemy/zephcast/issues)
+- [Documentation](https://zbytealchemy.github.io/zephcast)
 - [Contributing Guide](development/contributing.md)

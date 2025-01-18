@@ -7,7 +7,7 @@ import pytest
 
 from aio_pika.exceptions import AMQPConnectionError
 
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 from .conftest import RABBITMQ_URL, TEST_TIMEOUT
 

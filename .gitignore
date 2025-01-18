@@ -121,3 +121,7 @@ $RECYCLE.BIN/
 # Specific to MsgFlow project
 logs/
 *.pkl
+
+# docs site
+site/
+
