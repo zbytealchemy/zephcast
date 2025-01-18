@@ -4,20 +4,20 @@
 # Required
 version: 2
 
-# Set the OS, Python version, and other tools you might need
 build:
-  os: ubuntu-22.04
+  os: "ubuntu-22.04"
   tools:
-    python: "3.10"  # Specify Python 3.10 as the build version
+    python: "3.10"
 
-# Build documentation with MkDocs
+  jobs:
+    post_create_environment:
+      - pip install poetry
+
+    post_install:
+      # Install dependencies using the 'docs' group
+      # Note: Set VIRTUAL_ENV manually as a workaround for Poetry
+      - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --no-root --with docs
+
 mkdocs:
-  configuration: mkdocs.yml  # Path to your mkdocs.yml file (top-level directory)
+  configuration: mkdocs.yml  # Path to your mkdocs.yml file
 
-# Declare Python requirements required to build your documentation
-python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
