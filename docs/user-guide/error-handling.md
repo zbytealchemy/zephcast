@@ -1,6 +1,6 @@
 # Error Handling and Retry
 
-MsgFlow provides robust error handling and retry capabilities to help you build reliable message processing systems.
+ZephCast provides robust error handling and retry capabilities to help you build reliable message processing systems.
 
 ## Retry Configuration
 
@@ -146,7 +146,7 @@ async def process_batch(messages: List[str]) -> None:
 
 ## Client Error Handling
 
-MsgFlow messaging clients (Kafka, RabbitMQ, Redis) handle errors as follows:
+ZephCast messaging clients (Kafka, RabbitMQ, Redis) handle errors as follows:
 
 1. **Connection Errors**
    - Clients raise appropriate exceptions when connection fails

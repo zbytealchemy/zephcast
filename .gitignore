@@ -118,7 +118,7 @@ $RECYCLE.BIN/
 *.swp
 *.swo
 
-# Specific to MsgFlow project
+# Specific to ZephCast project
 logs/
 *.pkl
 

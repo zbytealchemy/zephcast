@@ -2,6 +2,12 @@
 
 ZephCast is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
 
+[![Documentation Status](https://readthedocs.org/projects/zephcast/badge/?version=latest)](https://zephcast.readthedocs.io/en/latest/)
+
+## Documentation
+
+Full documentation is available [here](https://zephcast.readthedocs.io/en/latest/).
+
 ## Features
 
 - **Multiple Broker Support**: 
