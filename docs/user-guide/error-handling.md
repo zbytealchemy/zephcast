@@ -7,7 +7,7 @@ MsgFlow provides robust error handling and retry capabilities to help you build 
 The `RetryConfig` class allows you to configure retry behavior:
 
 ```python
-from msgflow.core.retry import RetryConfig
+from zephcast.core.retry import RetryConfig
 
 # Basic retry configuration
 config = RetryConfig(
@@ -32,8 +32,8 @@ config = RetryConfig(
 You can add retry behavior to your message consumers using the `ConsumerConfig`:
 
 ```python
-from msgflow.core.consumers import ConsumerConfig, consumer
-from msgflow.core.retry import RetryConfig
+from zephcast.core.consumers import ConsumerConfig, consumer
+from zephcast.core.retry import RetryConfig
 
 # Configure retry behavior
 retry_config = RetryConfig(
@@ -63,8 +63,8 @@ Retry also works with batch consumers:
 
 ```python
 from typing import List
-from msgflow.core.consumers import ConsumerConfig, batch_consumer
-from msgflow.core.retry import RetryConfig
+from zephcast.core.consumers import ConsumerConfig, batch_consumer
+from zephcast.core.retry import RetryConfig
 
 # Configure retry for batch processing
 retry_config = RetryConfig(
@@ -166,7 +166,7 @@ MsgFlow messaging clients (Kafka, RabbitMQ, Redis) handle errors as follows:
 Example:
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def safe_consume():
     client = AsyncKafkaClient(

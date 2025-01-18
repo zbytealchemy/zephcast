@@ -71,7 +71,7 @@ REDIS_URL=redis://localhost:6379
 
 ```python
 import pytest
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 @pytest.mark.asyncio
 async def test_kafka_client_creation():
@@ -87,7 +87,7 @@ async def test_kafka_client_creation():
 
 ```python
 import pytest
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 @pytest.mark.asyncio
 async def test_rabbitmq_send_receive(rabbitmq_async_client):
@@ -104,7 +104,7 @@ async def test_rabbitmq_send_receive(rabbitmq_async_client):
 
 ```python
 import pytest
-from msgflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 @pytest.fixture
 async def redis_client():
@@ -249,13 +249,13 @@ jobs:
 ### Running Coverage
 
 ```bash
-poetry run pytest --cov=msgflow
+poetry run pytest --cov=zephcast
 ```
 
 ### Coverage Report
 
 ```bash
-poetry run pytest --cov=msgflow --cov-report=html
+poetry run pytest --cov=zephcast --cov-report=html
 ```
 
 ## Debugging Tests

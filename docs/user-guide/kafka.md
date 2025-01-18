@@ -1,6 +1,6 @@
 # Kafka Client Guide
 
-The Kafka client in ZephyrFlow provides a high-level interface for working with Apache Kafka.
+The Kafka client in ZephCast provides a high-level interface for working with Apache Kafka.
 
 ## Features
 
@@ -13,7 +13,7 @@ The Kafka client in ZephyrFlow provides a high-level interface for working with 
 ## Basic Usage
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     client = AsyncKafkaClient(
@@ -37,7 +37,7 @@ async def kafka_example():
 ## Consumer Groups
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def consumer_group_example():
     consumer = AsyncKafkaClient(
@@ -110,7 +110,7 @@ client = AsyncKafkaClient(
 ## Error Handling
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 from kafka.errors import KafkaError
 
 async def error_handling_example():

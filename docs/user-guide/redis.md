@@ -1,6 +1,6 @@
 # Redis Client Guide
 
-The Redis client in ZephyrFlow provides a high-level interface for working with Redis Streams.
+The Redis client in ZephCast provides a high-level interface for working with Redis Streams.
 
 ## Features
 
@@ -14,7 +14,7 @@ The Redis client in ZephyrFlow provides a high-level interface for working with 
 ## Basic Usage
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_example():
     client = AsyncRedisClient(
@@ -38,7 +38,7 @@ async def redis_example():
 ## Consumer Groups
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def consumer_group_example():
     client = AsyncRedisClient(
@@ -62,7 +62,7 @@ async def consumer_group_example():
 ### Stream Trimming
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def stream_trimming_example():
     client = AsyncRedisClient(
@@ -83,7 +83,7 @@ async def stream_trimming_example():
 ### Message Acknowledgment
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def ack_example():
     client = AsyncRedisClient(
@@ -114,7 +114,7 @@ async def ack_example():
 ### Connection Pooling
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
@@ -127,7 +127,7 @@ client = AsyncRedisClient(
 ### SSL/TLS Configuration
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
@@ -141,7 +141,7 @@ client = AsyncRedisClient(
 ## Error Handling
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 from redis.exceptions import RedisError
 
 async def error_handling_example():

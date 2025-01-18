@@ -7,7 +7,7 @@ import pytest
 
 from aiokafka.errors import KafkaConnectionError
 
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 from .conftest import KAFKA_BOOTSTRAP_SERVERS, TEST_TIMEOUT
 

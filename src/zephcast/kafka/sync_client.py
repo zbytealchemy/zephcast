@@ -8,7 +8,7 @@ from typing import Any, Generic, Optional, TypeVar
 from kafka import KafkaConsumer, KafkaProducer
 from kafka.errors import KafkaError
 
-from zephyrflow.core.base import SyncMessagingClient
+from zephcast.core.base import SyncMessagingClient
 
 T = TypeVar("T")
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class SyncKafkaClient(SyncMessagingClient[T], Generic[T]):
         """
         super().__init__(stream_name=stream_name)
         self.bootstrap_servers = bootstrap_servers
-        self.group_id = group_id or f"zephyrflow-{stream_name}"
+        self.group_id = group_id or f"zephcast-{stream_name}"
         self.producer: Optional[KafkaProducer] = None
         self.consumer: Optional[KafkaConsumer] = None
         self.extra_kwargs = kwargs

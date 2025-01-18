@@ -27,10 +27,10 @@ ZephyrFlow is a powerful and flexible messaging library that provides a unified 
 
 ```bash
 # Install with poetry (recommended)
-poetry add zephyrflow
+poetry add zephcast
 
 # Install with pip
-pip install zephyrflow
+pip install zephcast
 ```
 
 ## Quick Start
@@ -48,7 +48,7 @@ async with client:  # Automatically connects and closes
 ### Kafka Example
 
 ```python
-from zephyrflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     # Create a client
@@ -70,7 +70,7 @@ async def kafka_example():
 ### RabbitMQ Example
 
 ```python
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
     # Create a client
@@ -98,7 +98,7 @@ async def rabbitmq_example():
 ### Redis Example
 
 ```python
-from zephyrflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_example():
     # Create a client
@@ -215,8 +215,8 @@ finally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/zbytealchemy/zephyrflow.git
-cd zephyrflow
+git clone https://github.com/zbytealchemy/zephcast.git
+cd zephcast
 
 # Install dependencies
 poetry install

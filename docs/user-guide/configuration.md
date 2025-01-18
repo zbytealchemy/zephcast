@@ -31,7 +31,7 @@ REDIS_MAX_CONNECTIONS=10
 ### Kafka Client
 
 ```python
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 client = AsyncKafkaClient(
     stream_name="my-topic",
@@ -47,7 +47,7 @@ client = AsyncKafkaClient(
 ### RabbitMQ Client
 
 ```python
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 client = AsyncRabbitClient(
     stream_name="my-routing-key",
@@ -63,7 +63,7 @@ client = AsyncRabbitClient(
 ### Redis Client
 
 ```python
-from msgflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 client = AsyncRedisClient(
     stream_name="my-stream",
