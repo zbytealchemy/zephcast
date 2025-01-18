@@ -1,3 +1,9 @@
-"""Zephyrflow package."""
+"""
+ZephCast
+Copyright (C) 2025 Zbigniew Mastylo
+Licensed under the MIT License. See LICENSE for details.
 
-__version__ = "0.1.0"
+ZephCast package.
+"""
+
+__version__ = "0.5.0"

@@ -56,10 +56,8 @@ async def rabbitmq_example():
     await client.connect()
     
     try:
-        # Send a message
         await client.send("Hello RabbitMQ!")
         
-        # Receive messages
         async for message in client.receive():
             print(f"Received: {message}")
             await client.ack(message)
