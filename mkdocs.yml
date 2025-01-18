@@ -1,6 +1,6 @@
-site_name: ZephyrFlow Documentation
-site_description: Documentation for the ZephyrFlow messaging library
-repo_url: https://github.com/zbytealchemy/zephyrflow
+site_name: ZephCast Documentation
+site_description: Documentation for the ZephCast messaging library
+repo_url: https://github.com/zbytealchemy/zephcast
 
 theme:
   name: material

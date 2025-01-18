@@ -4,8 +4,8 @@ from typing import cast
 
 import pytest
 
-from zephyrflow.testing.helpers import assert_messages_equal, create_mock_client
-from zephyrflow.testing.mock_client import MockAsyncClient, MockSyncClient
+from zephcast.testing.helpers import assert_messages_equal, create_mock_client
+from zephcast.testing.mock_client import MockAsyncClient, MockSyncClient
 
 
 def test_sync_client_send() -> None:

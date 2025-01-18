@@ -114,6 +114,6 @@ class AsyncMessagingClient(ABC, Generic[T]):
 
     async def __anext__(self) -> T:
         """Get next message."""
-        async for message in await self.receive():
-            return message
+        async for message in self.receive():  # type: ignore
+            return message  # type: ignore
         raise StopAsyncIteration

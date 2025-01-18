@@ -9,7 +9,7 @@ The RabbitMQ client provides a high-level interface for working with RabbitMQ.
 The main client class for interacting with RabbitMQ.
 
 ```python
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 client = AsyncRabbitClient(
     stream_name="my-routing-key",
@@ -44,7 +44,7 @@ client = AsyncRabbitClient(
 
 ```python
 import asyncio
-from zephyrflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
     client = AsyncRabbitClient(

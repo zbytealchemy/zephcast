@@ -3,7 +3,7 @@
 import asyncio
 import logging
 
-from zephyrflow.kafka import AsyncKafkaClient
+from zephcast.kafka import AsyncKafkaClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

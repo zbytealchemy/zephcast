@@ -1,10 +1,10 @@
 # Quick Start Guide
 
-This guide will help you get started with ZephyrFlow by walking through basic examples for each supported message broker.
+This guide will help you get started with ZephCast by walking through basic examples for each supported message broker.
 
 ## Basic Concepts
 
-ZephyrFlow provides a unified interface for working with different message brokers. The main concepts are:
+ZephCast provides a unified interface for working with different message brokers. The main concepts are:
 
 - **Client**: A connection to a message broker
 - **Stream**: A named channel for sending/receiving messages
@@ -13,7 +13,7 @@ ZephyrFlow provides a unified interface for working with different message broke
 
 ## Async Iterator Pattern
 
-All async clients in ZephyrFlow implement the async iterator pattern, which provides a clean and Pythonic way to work with message streams:
+All async clients in ZephCast implement the async iterator pattern, which provides a clean and Pythonic way to work with message streams:
 
 ```python
 # Using async context manager for automatic connection management
@@ -38,11 +38,11 @@ finally:
 
 ## Kafka Example
 
-Here's a complete example of using ZephyrFlow with Kafka:
+Here's a complete example of using ZephCast with Kafka:
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_example():
     # Create a client
@@ -70,11 +70,11 @@ asyncio.run(kafka_example())
 
 ## RabbitMQ Example
 
-Here's how to use ZephyrFlow with RabbitMQ:
+Here's how to use ZephCast with RabbitMQ:
 
 ```python
 import asyncio
-from msgflow.rabbit.async_client import AsyncRabbitClient
+from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
     # Create a client
@@ -103,11 +103,11 @@ asyncio.run(rabbitmq_example())
 
 ## Redis Example
 
-Here's how to use ZephyrFlow with Redis Streams:
+Here's how to use ZephCast with Redis Streams:
 
 ```python
 import asyncio
-from msgflow.redis.async_client import AsyncRedisClient
+from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_example():
     # Create a client
@@ -139,7 +139,7 @@ Here's an example of using consumer groups with Kafka:
 
 ```python
 import asyncio
-from msgflow.kafka.async_client import AsyncKafkaClient
+from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def consumer_group_example():
     # Create multiple consumers in the same group
