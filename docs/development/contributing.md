@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thank you for your interest in contributing to MsgFlow! This guide will help you get started with contributing to the project.
+Thank you for your interest in contributing to ZephCast! This guide will help you get started with contributing to the project.
 
 ## Development Setup
 
@@ -151,4 +151,4 @@ zephcast/
 
 ## License
 
-MsgFlow is licensed under the MIT License. By contributing to MsgFlow, you agree to license your contributions under the same license.
+ZephCast is licensed under the MIT License. By contributing to ZephCast, you agree to license your contributions under the same license.

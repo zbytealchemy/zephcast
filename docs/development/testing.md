@@ -1,6 +1,6 @@
 # Testing Guide
 
-This guide covers testing practices and guidelines for MsgFlow.
+This guide covers testing practices and guidelines for ZephCast.
 
 ## Test Structure
 
