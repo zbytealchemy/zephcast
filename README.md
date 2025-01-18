@@ -1,6 +1,6 @@
-# ZephyrFlow
+# ZephCast
 
-ZephyrFlow is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
+ZephCast is a powerful and flexible messaging library that provides a unified interface for working with multiple message brokers. It currently supports Kafka, RabbitMQ, and Redis, offering both synchronous and asynchronous clients.
 
 ## Features
 
@@ -37,7 +37,8 @@ pip install zephcast
 
 ### Async Iterator Pattern
 
-All async clients in ZephyrFlow implement the async iterator pattern, allowing you to use them in async for loops:
+All async clients in ZephCast:w
+ implement the async iterator pattern, allowing you to use them in async for loops:
 
 ```python
 async with client:  # Automatically connects and closes
