@@ -1,0 +1,20 @@
+version: 2
+
+mkdocs:
+  configuration: mkdocs.yml  # Path to your mkdocs.yml file
+
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.10"  # Default Python version to use during build
+
+python:
+  version: "3.10"
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
+  constraints:
+    - ">=3.9,<3.14"
+
