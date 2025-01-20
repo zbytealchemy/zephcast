@@ -50,10 +50,8 @@ async def kafka_example():
     await client.connect()
     
     try:
-        # Send a message
         await client.send("Hello Kafka!")
         
-        # Receive messages
         async for message in client.receive():
             print(f"Received: {message}")
             break

@@ -26,10 +26,8 @@ async def rabbitmq_example():
     
     await client.connect()
     
-    # Send a message
     await client.send("Hello RabbitMQ!")
     
-    # Receive messages
     async for message in client.receive():
         print(f"Received: {message}")
         break
@@ -143,9 +141,7 @@ async def consumer_acks_example():
     try:
         async for message in client.receive():
             try:
-                # Process message
                 print(f"Processing: {message}")
-                # Acknowledge success
                 await client.ack(message)
             except Exception:
                 # Negative acknowledge on failure

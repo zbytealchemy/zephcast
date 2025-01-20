@@ -24,10 +24,8 @@ async def redis_example():
     
     await client.connect()
     
-    # Send a message
     await client.send("Hello Redis!")
     
-    # Receive messages
     async for message in client.receive():
         print(f"Received: {message}")
         break
@@ -98,7 +96,6 @@ async def ack_example():
     try:
         async for message in client.receive():
             try:
-                # Process message
                 print(f"Processing: {message}")
                 # Acknowledge success
                 await client.ack(message)

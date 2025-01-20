@@ -43,8 +43,8 @@ pip install zephcast
 
 ### Async Iterator Pattern
 
-All async clients in ZephCast:w
- implement the async iterator pattern, allowing you to use them in async for loops:
+All async clients in ZephCast implement the async 
+iterator pattern, allowing you to use them in async for loops:
 
 ```python
 async with client:  # Automatically connects and closes
@@ -66,7 +66,6 @@ async def kafka_example():
     
     # Using async context manager
     async with client:
-        # Send messages
         await client.send("Hello Kafka!")
         
         # Receive messages
@@ -80,14 +79,12 @@ async def kafka_example():
 from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_example():
-    # Create a client
     client = AsyncRabbitClient(
         stream_name="my-routing-key",
         queue_name="my-queue",
         rabbitmq_url="amqp://guest:guest@localhost:5672/"
     )
     
-    # Connect
     await client.connect()
     
     # Send messages
@@ -108,24 +105,19 @@ async def rabbitmq_example():
 from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_example():
-    # Create a client
     client = AsyncRedisClient(
         stream_name="my-stream",
         redis_url="redis://localhost:6379"
     )
     
-    # Connect
     await client.connect()
     
-    # Send messages
     await client.send("Hello Redis!")
     
-    # Receive messages
     async for message in client.receive():
         print(f"Received: {message}")
         break
     
-    # Close connection
     await client.close()
 ```
 
@@ -226,10 +218,10 @@ git clone https://github.com/zbytealchemy/zephcast.git
 cd zephcast
 
 # Install dependencies
-poetry install
+make install
 
-# Run tests
-poetry run pytest
+# Run unit tests
+make unit-test
 ```
 
 ### Running Integration Tests
@@ -243,7 +235,7 @@ docker-compose up -d
 Run the integration tests:
 
 ```bash
-poetry run pytest tests/integration
+make integration-test
 ```
 
 ## Contributing
