@@ -53,7 +53,7 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.RELEASE_FLAG == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.RELEASE_FLAG == 'true'
     
     steps:
     - uses: actions/checkout@v3
@@ -72,6 +72,20 @@ jobs:
       run: |
         poetry config virtualenvs.create false
         poetry install --no-interaction
+
+    - name: Set RELEASE_FLAG
+      run: echo "RELEASE_FLAG=${{ vars.RELEASE_FLAG }}" >> $GITHUB_ENV
+
+    - name: Get version from pyproject.toml
+      run: |
+        echo "VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
+    - name: Create and push tag
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git tag -a "v${VERSION}" -m "Release v${VERSION}"
+        git push origin "v${VERSION}"
     
     - name: Build and publish
       env:
