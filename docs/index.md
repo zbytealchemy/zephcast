@@ -68,5 +68,5 @@ Thoroughly tested and used in production, ZephCast includes robust error handlin
 ## Support
 
 - [GitHub Issues](https://github.com/zbytealchemy/zephcast/issues)
-- [Documentation](https://zbytealchemy.github.io/zephcast)
+- [Documentation](https://zephcast.readthedocs.io/en/latest/)
 - [Contributing Guide](development/contributing.md)
