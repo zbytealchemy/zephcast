@@ -17,7 +17,6 @@ import asyncio
 from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def kafka_consumer_group():
-    # Create multiple consumers in the same group
     consumers = [
         AsyncKafkaClient(
             stream_name="my-topic",
@@ -27,22 +26,18 @@ async def kafka_consumer_group():
         for _ in range(3)
     ]
     
-    # Connect all consumers
     await asyncio.gather(*(consumer.connect() for consumer in consumers))
     
     try:
-        # Process messages
         async def consume(client, consumer_id):
             async for message in client.receive():
                 print(f"Consumer {consumer_id} received: {message}")
         
-        # Run consumers concurrently
         await asyncio.gather(*(
             consume(consumer, i) 
             for i, consumer in enumerate(consumers)
         ))
     finally:
-        # Clean up
         await asyncio.gather(*(consumer.close() for consumer in consumers))
 ```
 
@@ -53,33 +48,28 @@ import asyncio
 from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def rabbitmq_competing_consumers():
-    # Create multiple consumers sharing the same queue
     consumers = [
         AsyncRabbitClient(
             stream_name="task-queue",
-            queue_name="shared-queue",  # Same queue name
+            queue_name="shared-queue",
             rabbitmq_url="amqp://guest:guest@localhost:5672/"
         )
         for _ in range(3)
     ]
     
-    # Connect all consumers
     await asyncio.gather(*(consumer.connect() for consumer in consumers))
     
     try:
-        # Process messages
         async def consume(client, consumer_id):
             async for message in client.receive():
                 print(f"Worker {consumer_id} processing: {message}")
                 await asyncio.sleep(1)  # Simulate work
         
-        # Run consumers concurrently
         await asyncio.gather(*(
             consume(consumer, i) 
             for i, consumer in enumerate(consumers)
         ))
     finally:
-        # Clean up
         await asyncio.gather(*(consumer.close() for consumer in consumers))
 ```
 
@@ -90,7 +80,6 @@ import asyncio
 from zephcast.redis.async_client import AsyncRedisClient
 
 async def redis_consumer_group():
-    # Create multiple consumers in the same group
     consumers = [
         AsyncRedisClient(
             stream_name="my-stream",
@@ -101,23 +90,19 @@ async def redis_consumer_group():
         for i in range(3)
     ]
     
-    # Connect all consumers
     await asyncio.gather(*(consumer.connect() for consumer in consumers))
     
     try:
-        # Process messages
         async def consume(client, consumer_id):
             async for message in client.receive():
                 print(f"Consumer {consumer_id} received: {message}")
                 await client.ack(message)
         
-        # Run consumers concurrently
         await asyncio.gather(*(
             consume(consumer, i) 
             for i, consumer in enumerate(consumers)
         ))
     finally:
-        # Clean up
         await asyncio.gather(*(consumer.close() for consumer in consumers))
 ```
 

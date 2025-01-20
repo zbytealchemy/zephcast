@@ -44,7 +44,7 @@ async def handle_publish_error():
         await client.send("My message")
     except MessageError as e:
         print(f"Failed to publish message: {e}")
-        # Handle failed publication
+        ...
     finally:
         await client.close()
 ```
@@ -66,11 +66,9 @@ async def handle_consumer_error():
     try:
         async for message in client.receive():
             try:
-                # Process message
                 process_message(message)
                 await client.ack(message)
             except ProcessingError:
-                # Handle processing failure
                 await client.nack(message)
             except RedisError as e:
                 print(f"Redis error: {e}")
@@ -175,7 +173,6 @@ async def publish_with_circuit_breaker():
 from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def setup_dead_letter():
-    # Main queue client
     main_client = AsyncRabbitClient(
         stream_name="my-routing-key",
         queue_name="my-queue",
@@ -185,7 +182,6 @@ async def setup_dead_letter():
         rabbitmq_url="amqp://guest:guest@localhost:5672/"
     )
     
-    # Dead letter queue client
     dlq_client = AsyncRabbitClient(
         stream_name="failed",
         queue_name="dead-letter-queue",
@@ -197,14 +193,11 @@ async def setup_dead_letter():
     await dlq_client.connect()
     
     try:
-        # Process messages with dead letter handling
         async for message in main_client.receive():
             try:
-                # Process message
                 process_message(message)
                 await main_client.ack(message)
             except Exception as e:
-                # Message will be sent to dead letter queue
                 await main_client.nack(message, requeue=False)
     finally:
         await main_client.close()

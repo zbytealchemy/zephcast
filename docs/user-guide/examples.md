@@ -11,20 +11,16 @@ import asyncio
 from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def basic_example():
-    # Create a client
     client = AsyncKafkaClient(
         stream_name="my-topic",
         bootstrap_servers="localhost:9092"
     )
     
     try:
-        # Connect
         await client.connect()
         
-        # Send a message
         await client.send("Hello, World!")
         
-        # Receive messages
         async for message in client.receive():
             print(f"Received: {message}")
             break
@@ -44,7 +40,6 @@ import asyncio
 from zephcast.rabbit.async_client import AsyncRabbitClient
 
 async def fan_out_example():
-    # Create a producer
     producer = AsyncRabbitClient(
         stream_name="notifications",
         exchange_name="notifications",
@@ -52,7 +47,6 @@ async def fan_out_example():
         rabbitmq_url="amqp://guest:guest@localhost:5672/"
     )
     
-    # Create multiple consumers
     consumers = [
         AsyncRabbitClient(
             stream_name="notifications",
@@ -65,14 +59,11 @@ async def fan_out_example():
     ]
     
     try:
-        # Connect all clients
         await producer.connect()
         await asyncio.gather(*(consumer.connect() for consumer in consumers))
         
-        # Send a message
         await producer.send("Broadcast message")
         
-        # Receive on all consumers
         async def consume(client, consumer_id):
             async for message in client.receive():
                 print(f"Consumer {consumer_id} received: {message}")
@@ -97,7 +88,6 @@ import asyncio
 from zephcast.redis.async_client import AsyncRedisClient
 
 async def pub_sub_example():
-    # Create publisher and subscribers
     publisher = AsyncRedisClient(
         stream_name="news-feed",
         redis_url="redis://localhost:6379"
@@ -113,14 +103,11 @@ async def pub_sub_example():
     ]
     
     try:
-        # Connect all clients
         await publisher.connect()
         await asyncio.gather(*(sub.connect() for sub in subscribers))
         
-        # Publish messages
         await publisher.send("Breaking news!")
         
-        # Subscribe and receive
         async def subscribe(client, sub_id):
             async for message in client.receive():
                 print(f"Subscriber {sub_id} received: {message}")
@@ -181,7 +168,6 @@ import json
 from zephcast.kafka.async_client import AsyncKafkaClient
 
 async def transform_example():
-    # Create source and destination clients
     source = AsyncKafkaClient(
         stream_name="raw-data",
         bootstrap_servers="localhost:9092"
@@ -196,17 +182,14 @@ async def transform_example():
         await source.connect()
         await destination.connect()
         
-        # Process and transform messages
         async for message in source.receive():
-            # Transform the message
             try:
                 data = json.loads(message)
                 transformed = {
                     "id": data["id"],
                     "timestamp": data["timestamp"],
-                    "value": data["value"] * 2  # Some transformation
+                    "value": data["value"] * 2 
                 }
-                # Send transformed message
                 await destination.send(json.dumps(transformed))
             except json.JSONDecodeError:
                 print(f"Invalid JSON: {message}")

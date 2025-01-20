@@ -52,10 +52,8 @@ async def redis_example():
     await client.connect()
     
     try:
-        # Send a message
         await client.send("Hello Redis!")
         
-        # Receive messages
         async for message in client.receive():
             print(f"Received: {message}")
             break
@@ -84,7 +82,6 @@ async def consumer_group_example():
         async for message in client.receive():
             try:
                 print(f"Processing: {message}")
-                # Process message
                 await client.ack(message)
             except Exception as e:
                 print(f"Processing failed: {e}")

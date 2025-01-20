@@ -14,7 +14,7 @@ async def batch_publish():
         stream_name="my-topic",
         bootstrap_servers="localhost:9092",
         batch_size=16384,  # 16KB
-        linger_ms=10,  # Wait up to 10ms to batch messages
+        linger_ms=10,      # Wait up to 10ms to batch messages
         compression_type="snappy"
     )
     
@@ -110,11 +110,9 @@ async def compress_and_send():
     await client.connect()
     
     try:
-        # Compress message
         message = "Large message content"
         compressed = zlib.compress(message.encode())
         
-        # Send compressed message
         await client.send(compressed)
     finally:
         await client.close()
@@ -145,7 +143,6 @@ async def parallel_processing():
     try:
         tasks = []
         async for message in client.receive():
-            # Process messages in parallel
             task = asyncio.create_task(process_message(message))
             tasks.append(task)
             
@@ -154,7 +151,6 @@ async def parallel_processing():
                 await asyncio.gather(*tasks)
                 tasks = []
     finally:
-        # Clean up remaining tasks
         if tasks:
             await asyncio.gather(*tasks)
         await client.close()
