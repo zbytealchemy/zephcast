@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12"]
 
     services:
       redis:
@@ -76,18 +76,13 @@ jobs:
     - name: Set RELEASE_FLAG
       run: echo "RELEASE_FLAG=${{ vars.RELEASE_FLAG }}" >> $GITHUB_ENV
 
-    - name: Check if release is enabled
-      if: env.RELEASE_FLAG == 'true'
-      run: |
-        echo "Release flag is enabled, proceeding with release steps"
-
     - name: Get version from pyproject.toml
-      if: env.RELEASE_FLAG == 'true'
+      if: ${{ env.RELEASE_FLAG == 'true' }}
       run: |
         echo "VERSION=$(poetry version -s)" >> $GITHUB_ENV
 
     - name: Create and push tag
-      if: env.RELEASE_FLAG == 'true'
+      if: ${{ env.RELEASE_FLAG == 'true' }}
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
@@ -95,7 +90,7 @@ jobs:
         git push origin "v${VERSION}"
     
     - name: Build and publish
-      if: env.RELEASE_FLAG == 'true'
+      if: ${{ env.RELEASE_FLAG == 'true' }}
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
       run: |

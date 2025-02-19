@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zephcast"
-version = "1.0.0"
+version = "0.6.0"
 description = "A messaging library supporting multiple backends"
 authors = ["Zbigniew Mastylo <z.mastylo@protonmail.com>"]
 readme = "README.md"
