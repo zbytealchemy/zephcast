@@ -1,0 +1,65 @@
+src/
+└── zephcast/
+    ├── __init__.py
+    ├── core/                 # Core functionality (always installed)
+    │   ├── __init__.py
+    │   ├── exceptions.py
+    │   ├── types.py
+    │   └── utils.py
+    ├── sync/                # Synchronous implementations
+    │   ├── __init__.py
+    │   ├── base.py         # Base classes for sync clients
+    │   ├── kafka/          # Sync Kafka implementation
+    │   │   ├── __init__.py
+    │   │   ├── client.py
+    │   │   └── types.py
+    │   ├── rabbit/         # Sync RabbitMQ implementation
+    │   │   ├── __init__.py
+    │   │   ├── client.py
+    │   │   └── types.py
+    │   └── redis/          # Sync Redis implementation
+    │       ├── __init__.py
+    │       ├── client.py
+    │       └── types.py
+    └── aio/                # Asynchronous implementations
+        ├── __init__.py
+        ├── base.py        # Base classes for async clients
+        ├── kafka/         # Async Kafka implementation
+        │   ├── __init__.py
+        │   ├── client.py
+        │   └── types.py
+        ├── rabbit/        # Async RabbitMQ implementation
+        │   ├── __init__.py
+        │   ├── client.py
+        │   └── types.py
+        └── redis/         # Async Redis implementation
+            ├── __init__.py
+            ├── client.py
+            └── types.py
+```
+
+Let's implement proper dependency checking:
+
+<augment_code_snippet path="src/zephcast/core/exceptions.py" mode="EDIT">
+```python
+"""Core exceptions for ZephCast."""
+
+class ZephCastError(Exception):
+    """Base exception for all ZephCast errors."""
+
+class DependencyError(ZephCastError):
+    """Raised when a required optional dependency is not installed."""
+    
+    @classmethod
+    def missing_sync(cls, broker: str) -> "DependencyError":
+        return cls(
+            f"Sync {broker} support not installed. "
+            f"Install with: pip install zephcast[sync-{broker.lower()}]"
+        )
+    
+    @classmethod
+    def missing_async(cls, broker: str) -> "DependencyError":
+        return cls(
+            f"Async {broker} support not installed. "
+            f"Install with: pip install zephcast[async-{broker.lower()}]"
+        )

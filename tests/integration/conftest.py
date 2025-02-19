@@ -7,16 +7,21 @@ import uuid
 from collections.abc import AsyncGenerator, Generator
 
 import pytest
+import pytest_asyncio
 
 from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import KafkaError, TopicAlreadyExistsError
 
-from zephcast.kafka.async_client import AsyncKafkaClient
-from zephcast.kafka.sync_client import SyncKafkaClient
-from zephcast.rabbit.async_client import AsyncRabbitClient
-from zephcast.redis.async_client import AsyncRedisClient
-from zephcast.redis.sync_client import SyncRedisClient
+from zephcast.aio.kafka import KafkaClient as AsyncKafkaClient
+from zephcast.aio.kafka.types import KafkaConfig
+from zephcast.aio.rabbit import RabbitClient as AsyncRabbitClient
+from zephcast.aio.rabbit.types import RabbitConfig
+from zephcast.aio.redis import RedisClient as AsyncRedisClient
+from zephcast.aio.redis.types import RedisConfig as AsyncRedisConfig
+from zephcast.sync.kafka import KafkaClient as SyncKafkaClient
+from zephcast.sync.redis import RedisClient as SyncRedisClient
+from zephcast.sync.redis.types import RedisConfig as SyncRedisConfig
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 RABBITMQ_URL = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/")
@@ -44,9 +49,7 @@ def kafka_topic(kafka_admin: KafkaAdminClient) -> Generator[str, None, None]:
     """Create a unique Kafka topic for testing."""
     topic_name = f"test-topic-{uuid.uuid4()}"
     try:
-        kafka_admin.create_topics(
-            [NewTopic(name=topic_name, num_partitions=1, replication_factor=1)]
-        )
+        kafka_admin.create_topics([NewTopic(name=topic_name, num_partitions=1, replication_factor=1)])
     except TopicAlreadyExistsError:
         pass
     except KafkaError as e:
@@ -74,23 +77,21 @@ def rabbitmq_queue() -> Generator[str, None, None]:
     yield queue_name
 
 
-@pytest.fixture
-def kafka_async_client(kafka_topic: str) -> AsyncKafkaClient:
+@pytest_asyncio.fixture
+async def kafka_async_client(kafka_topic: str) -> AsyncKafkaClient:
     """Create an async Kafka client for testing."""
-    client = AsyncKafkaClient(
-        stream_name=kafka_topic,
-        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        auto_offset_reset="earliest",
-    )
+    config = KafkaConfig(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS, auto_offset_reset="earliest")
+    client = AsyncKafkaClient(stream_name=kafka_topic, connection_config=config)
     return client
 
 
 @pytest.fixture
 def kafka_sync_client(kafka_topic: str) -> Generator[SyncKafkaClient, None, None]:
     """Create a sync Kafka client for testing."""
-    client: SyncKafkaClient = SyncKafkaClient(
-        stream_name=kafka_topic, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS
-    )
+    from zephcast.sync.kafka.types import KafkaConfig
+
+    config = KafkaConfig(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
+    client: SyncKafkaClient = SyncKafkaClient(stream_name=kafka_topic, config=config)
 
     try:
         client.connect()
@@ -104,40 +105,35 @@ def kafka_sync_client(kafka_topic: str) -> Generator[SyncKafkaClient, None, None
             print(f"Warning: Failed to close Kafka client: {e}")
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def rabbitmq_async_client(rabbitmq_queue: str) -> AsyncGenerator[AsyncRabbitClient, None]:
     """Create an async RabbitMQ client for testing."""
-    client = AsyncRabbitClient(
-        stream_name="test-routing-key", queue_name=rabbitmq_queue, rabbitmq_url=RABBITMQ_URL
-    )
+    config = RabbitConfig(url=RABBITMQ_URL, queue_name=rabbitmq_queue)
+    client = AsyncRabbitClient(stream_name="test-routing-key", config=config)
     try:
         await asyncio.wait_for(client.connect(), timeout=TEST_TIMEOUT)
-        async with client:
-            yield client
-    except asyncio.TimeoutError:
-        pytest.fail("Timeout while connecting to RabbitMQ")
-    except Exception as e:
-        pytest.fail(f"Failed to create RabbitMQ client: {e}")
+        yield client
+    finally:
+        await client.close()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def redis_async_client(redis_stream: str) -> AsyncGenerator[AsyncRedisClient, None]:
     """Create an async Redis client for testing."""
-    client = AsyncRedisClient(stream_name=redis_stream, redis_url=REDIS_URL)
+    config = AsyncRedisConfig(redis_url=REDIS_URL)
+    client = AsyncRedisClient(stream_name=redis_stream, config=config)
+    await client.connect()
     try:
-        await asyncio.wait_for(client.connect(), timeout=TEST_TIMEOUT)
-        async with client:
-            yield client
-    except asyncio.TimeoutError:
-        pytest.fail("Timeout while connecting to Redis")
-    except Exception as e:
-        pytest.fail(f"Failed to create Redis client: {e}")
+        yield client
+    finally:
+        await client.close()
 
 
 @pytest.fixture
 def redis_sync_client(redis_stream: str) -> Generator[SyncRedisClient, None, None]:
     """Create a sync Redis client for testing."""
-    client = SyncRedisClient(stream_name=redis_stream, redis_url=REDIS_URL)
+    config = SyncRedisConfig(redis_url=REDIS_URL)
+    client = SyncRedisClient(stream_name=redis_stream, config=config)
     try:
         client.connect()
         yield client
@@ -146,5 +142,5 @@ def redis_sync_client(redis_stream: str) -> Generator[SyncRedisClient, None, Non
     finally:
         try:
             client.close()
-        except Exception as e:
-            print(f"Warning: Failed to close Redis client: {e}")
+        except Exception:
+            pass

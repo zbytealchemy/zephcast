@@ -39,7 +39,7 @@ jobs:
     - name: Install dependencies
       run: |
         poetry config virtualenvs.create false
-        poetry install --no-interaction
+        poetry install --with test --no-interaction
     
     - name: Run linting
       run: poetry run make lint

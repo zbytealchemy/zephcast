@@ -21,10 +21,14 @@ install: lock
 install-dev: lock
 	poetry install --with dev
 
+install-all: lock
+	poetry install --with dev
+	poetry install --with test
+
 test: unit-test integration-test
 
 unit-test:
-	poetry run pytest tests/unit -v
+	poetry run pytest tests/unit --cov=zephcast --cov-report=term-missing
 
 integration-test:
 	poetry run pytest tests/integration -v
@@ -46,6 +50,19 @@ clean:
 	rm -rf .ruff_cache
 	rm -rf site
 	find . -type d -name __pycache__ -exec rm -rf {} +
+
+cache-purge:  ## Clean up Poetry cache
+	poetry cache clear . --all
+	rm -rf ~/Library/Caches/pypoetry
+	rm -rf ~/.cache/pypoetry
+	rm -rf .pytest_cache
+	rm -rf .ruff_cache
+	rm -rf .mypy_cache
+	rm -rf .tox
+	rm poetry.lock
+
+clear-all: cache-purge clean
+	poetry env remove --all
 
 docs:
 	poetry run mkdocs build

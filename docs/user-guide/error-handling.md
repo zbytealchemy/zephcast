@@ -1,23 +1,24 @@
 # Error Handling and Retry
 
-ZephCast provides robust error handling and retry capabilities to help you build reliable message processing systems.
+ZephCast provides robust error handling and retry capabilities for both synchronous and asynchronous operations.
 
 ## Retry Configuration
 
-The `RetryConfig` class allows you to configure retry behavior:
+ZephCast provides separate retry configurations for sync and async operations:
 
 ```python
-from zephcast.core.retry import RetryConfig
+from zephcast.sync.retry import SyncRetryConfig
+from zephcast.aio.retry import AsyncRetryConfig
 
-# Basic retry configuration
-config = RetryConfig(
+# Synchronous retry configuration
+sync_config = SyncRetryConfig(
     max_retries=3,          # Maximum number of retry attempts
     retry_sleep=1.0,        # Initial sleep time between retries
     backoff_factor=2.0,     # Multiplier for sleep time after each retry
 )
 
-# Advanced retry configuration
-config = RetryConfig(
+# Asynchronous retry configuration
+async_config = AsyncRetryConfig(
     max_retries=5,
     retry_sleep=0.1,
     backoff_factor=2.0,
@@ -29,29 +30,48 @@ config = RetryConfig(
 
 ## Using Retry with Consumers
 
-You can add retry behavior to your message consumers using the `ConsumerConfig`:
+Add retry behavior to your message consumers using the appropriate consumer config:
 
 ```python
-from zephcast.core.consumers import ConsumerConfig, consumer
-from zephcast.core.retry import RetryConfig
+# Synchronous consumer
+from zephcast.sync.consumers import SyncConsumerConfig
+from zephcast.sync.retry import SyncRetryConfig
 
-# Configure retry behavior
-retry_config = RetryConfig(
+retry_config = SyncRetryConfig(
     max_retries=3,
     retry_sleep=1.0,
     backoff_factor=2.0
 )
 
-# Create consumer config with retry
-consumer_config = ConsumerConfig(
+consumer_config = SyncConsumerConfig(
     retry=retry_config,
     auto_ack=True
 )
 
-# Apply retry to a message consumer
 @consumer(config=consumer_config)
-async def process_message(message: str) -> None:
+def process_message(message: str) -> None:
     # This function will retry up to 3 times if it fails
+    result = external_service.process(message)
+    if not result.success:
+        raise ValueError("Processing failed")
+
+# Asynchronous consumer
+from zephcast.aio.consumers import AsyncConsumerConfig
+from zephcast.aio.retry import AsyncRetryConfig
+
+async_retry_config = AsyncRetryConfig(
+    max_retries=3,
+    retry_sleep=1.0,
+    backoff_factor=2.0
+)
+
+async_consumer_config = AsyncConsumerConfig(
+    retry=async_retry_config,
+    auto_ack=True
+)
+
+@consumer(config=async_consumer_config)
+async def process_message_async(message: str) -> None:
     result = await external_service.process(message)
     if not result.success:
         raise ValueError("Processing failed")
@@ -63,17 +83,16 @@ Retry also works with batch consumers:
 
 ```python
 from typing import List
-from zephcast.core.consumers import ConsumerConfig, batch_consumer
-from zephcast.core.retry import RetryConfig
+from zephcast.aio.consumers import AsyncConsumerConfig
+from zephcast.aio.retry import AsyncRetryConfig
 
-# Configure retry for batch processing
-retry_config = RetryConfig(
+retry_config = AsyncRetryConfig(
     max_retries=3,
     retry_sleep=1.0,
     exceptions=(ConnectionError,)
 )
 
-consumer_config = ConsumerConfig(
+consumer_config = AsyncConsumerConfig(
     retry=retry_config,
     batch_size=10,
     batch_timeout=1.0

@@ -3,11 +3,13 @@
 import asyncio
 import uuid
 
+from typing import cast
+
 import pytest
 
-from aiokafka.errors import KafkaConnectionError
-
-from zephcast.kafka.async_client import AsyncKafkaClient
+from zephcast.aio.kafka import KafkaClient as AsyncKafkaClient
+from zephcast.aio.kafka.types import KafkaConfig
+from zephcast.core.exceptions import ConnectionError
 
 from .conftest import KAFKA_BOOTSTRAP_SERVERS, TEST_TIMEOUT
 
@@ -17,27 +19,26 @@ class TestKafkaAsyncClient:
 
     @pytest.mark.asyncio
     @pytest.mark.timeout(TEST_TIMEOUT)
-    async def test_async_send_receive(
-        self, kafka_async_client: AsyncKafkaClient, kafka_topic: str
-    ) -> None:
+    async def test_async_send_receive(self, kafka_async_client: AsyncKafkaClient, kafka_topic: str) -> None:
         """Test basic send and receive functionality."""
         test_messages = ["test1", "test2", "test3"]
         received_messages: list[str] = []
 
         client = kafka_async_client
-        await client.connect()
-
         try:
+            await client.connect()
+
             for message in test_messages:
                 await client.send(message)
 
-            async for message in client.receive():
-                received_messages.append(message)
+            async for msg, _ in client.receive():
+                message_text = cast(str, msg)
+                received_messages.append(message_text)
                 if len(received_messages) == len(test_messages):
                     break
 
-            assert len(received_messages) == len(test_messages)
-            assert all(msg in received_messages for msg in test_messages)
+            assert sorted(received_messages) == sorted(test_messages)
+
         except Exception as e:
             pytest.fail(f"Test failed: {e}")
         finally:
@@ -56,7 +57,8 @@ class TestKafkaAsyncClient:
         received_messages: list[list[str]] = [[], []]
 
         producer = AsyncKafkaClient(
-            stream_name=kafka_topic, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS
+            stream_name=kafka_topic,
+            connection_config=KafkaConfig(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS),
         )
         await producer.connect()
 
@@ -66,9 +68,11 @@ class TestKafkaAsyncClient:
             for _ in range(2):
                 consumer = AsyncKafkaClient(
                     stream_name=kafka_topic,
-                    group_id=group_id,
-                    bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-                    auto_offset_reset="earliest",
+                    connection_config=KafkaConfig(
+                        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+                        group_id=group_id,
+                        auto_offset_reset="earliest",
+                    ),
                 )
                 await consumer.connect()
                 consumers.append(consumer)
@@ -91,7 +95,8 @@ class TestKafkaAsyncClient:
 
                             async def _consume() -> None:
                                 async for msg in consumer.receive():
-                                    messages.append(msg)
+                                    msg_text, _ = msg
+                                    messages.append(msg_text)  # type: ignore
                                     await asyncio.sleep(0)
 
                             await asyncio.wait_for(_consume(), timeout=1.0)
@@ -132,9 +137,11 @@ class TestKafkaAsyncClient:
     @pytest.mark.timeout(5)
     async def test_error_handling(self, kafka_topic: str) -> None:
         """Test error handling in the presence of invalid Kafka brokers."""
-        client = AsyncKafkaClient(stream_name=kafka_topic, bootstrap_servers="invalid:9092")
+        client = AsyncKafkaClient(
+            stream_name=kafka_topic, connection_config=KafkaConfig(bootstrap_servers="invalid:9092")
+        )
 
-        with pytest.raises(KafkaConnectionError):
+        # For invalid connection tests, we don't even try to clean up
+        # Just verify it raises the right error
+        with pytest.raises(ConnectionError):
             await client.connect()
-
-        await client.close()

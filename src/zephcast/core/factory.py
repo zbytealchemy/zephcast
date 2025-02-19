@@ -1,10 +1,11 @@
 """Messaging client factory."""
+from typing import Any, TypeVar, Union
 
-from typing import Any, Union
+T = TypeVar("T")
+SyncBaseClient = TypeVar("SyncBaseClient")
+AsyncBaseClient = TypeVar("AsyncBaseClient")
 
-from .base import AsyncMessagingClient, SyncMessagingClient
-
-ClientType = Union[type[SyncMessagingClient], type[AsyncMessagingClient]]
+ClientType = Union[type[SyncBaseClient], type[AsyncBaseClient]]
 _REGISTERED_CLIENTS: dict[str, dict[str, ClientType]] = {
     "sync": {},
     "async": {},
@@ -12,13 +13,7 @@ _REGISTERED_CLIENTS: dict[str, dict[str, ClientType]] = {
 
 
 def register_client(name: str, client_type: str, client_class: ClientType) -> None:
-    """Register a messaging client.
-
-    Args:
-        name: Name of the client (e.g., 'redis', 'rabbitmq')
-        client_type: Type of client ('sync' or 'async')
-        client_class: Client class to register
-    """
+    """Register a messaging client."""
     if client_type not in ("sync", "async"):
         raise ValueError("client_type must be either 'sync' or 'async'")
 
@@ -30,18 +25,8 @@ def create_client(
     stream_name: str,
     is_async: bool = True,
     **kwargs: Any,
-) -> Union[SyncMessagingClient, AsyncMessagingClient]:
-    """Create a messaging client.
-
-    Args:
-        name: Name of the client (e.g., 'redis', 'rabbitmq')
-        stream_name: Name of the stream/queue/topic
-        is_async: Whether to create an async client
-        **kwargs: Additional arguments to pass to the client
-
-    Returns:
-        A messaging client instance
-    """
+) -> Any:
+    """Create a messaging client."""
     client_type = "async" if is_async else "sync"
     clients = _REGISTERED_CLIENTS[client_type]
 

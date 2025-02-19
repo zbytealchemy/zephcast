@@ -23,28 +23,27 @@ ZephCast is a powerful and flexible messaging library that provides a unified in
 ## Quick Example
 
 ```python
-from zephcast.kafka.async_client import AsyncKafkaClient
+from zephcast.aio.kafka import KafkaClient
+from zephcast.aio.kafka.config import KafkaConfig
 
 async def kafka_example():
     # Create a client
-    client = AsyncKafkaClient(
+    client = KafkaClient(
         stream_name="my-topic",
-        bootstrap_servers="localhost:9092"
+        config=KafkaConfig(
+            bootstrap_servers="localhost:9092"
+        )
     )
     
-    # Connect
-    await client.connect()
-    
-    # Send messages
-    await client.send("Hello Kafka!")
-    
-    # Receive messages
-    async for message in client.receive():
-        print(f"Received: {message}")
-        break
-    
-    # Close connection
-    await client.close()
+    # Using async context manager for clean connection handling
+    async with client:
+        # Send messages
+        await client.send("Hello Kafka!")
+        
+        # Receive messages
+        async for message in client:
+            print(f"Received: {message}")
+            break
 ```
 
 ## Getting Started

@@ -1,9 +1,39 @@
-"""
-ZephCast
-Copyright (C) 2025 Zbigniew Mastylo
-Licensed under the MIT License. See LICENSE for details.
+"""ZephCast - A unified messaging library."""
+from importlib.metadata import version
 
-ZephCast package.
-"""
+__version__ = version("zephcast")
 
-__version__ = "0.5.0"
+# Core exports
+from zephcast.core.consumers import ConsumerConfig, ExecutorType
+from zephcast.core.exceptions import (
+    ConnectionError,
+    DependencyError,
+    MessageError,
+    ZephCastError,
+)
+from zephcast.core.types import (
+    ClientOptions,
+    ConnectionConfig,
+    Headers,
+    Message,
+    MessageMetadata,
+)
+from zephcast.core.utils import deserialize_message, get_logger, serialize_message
+
+__all__ = [
+    "__version__",
+    "Message",
+    "MessageMetadata",
+    "Headers",
+    "ClientOptions",
+    "ConnectionConfig",
+    "ConsumerConfig",
+    "ExecutorType",
+    "ConnectionError",
+    "DependencyError",
+    "MessageError",
+    "ZephCastError",
+    "deserialize_message",
+    "get_logger",
+    "serialize_message",
+]
